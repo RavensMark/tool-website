@@ -212,11 +212,11 @@
     lines.push("**Difficulty:** " + (state.difficulty ? labelById(DIFFICULTIES, state.difficulty) : "—"));
     lines.push("");
     var cw = selectedWarningsSorted();
-    var warnings = "**Content warnings:** "
-    cw.forEach(function (t) {
-      warnings += ", " + mdEscapeInline(w)
+    var warnings = "**Content warnings:** ";
+    cw.forEach(function (warning, idx) {
+      warnings += (idx ? ", " : "") + mdEscapeInline(warning);
     });
-    if (cw.length){
+    if (cw.length) {
       lines.push(warnings);
     }
     lines.push("");
