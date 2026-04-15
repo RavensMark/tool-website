@@ -177,12 +177,19 @@
         <div class="card staff-rewards-card">
           <h3 class="staff-rewards-title">Rewards</h3>
           <p class="hint staff-rewards-hint">Rows you cannot afford yet are dimmed like sealed scrolls.</p>
+          <div class="staff-lookup-row">
+            <label class="field staff-username-field">
+              <span>Level</span>
+              <input type="number" id="staff-level" name="staffLevel" min="1" max="20" step="1" value="1" />
+            </label>
+          </div>
           <div class="staff-table-scroll">
             <table class="staff-rewards-table" aria-label="Staff point rewards">
               <thead>
                 <tr>
                   <th scope="col">Reward</th>
                   <th scope="col">Cost</th>
+                  <th scope="col">Amount</th>
                 </tr>
               </thead>
               <tbody id="staff-rewards-tbody"></tbody>
