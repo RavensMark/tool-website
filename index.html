@@ -124,6 +124,29 @@
                 <button type="button" class="btn primary" id="loot-search">Search within budget</button>
                 <button type="button" class="btn ghost" id="loot-show-all">Show all</button>
               </div>
+              <div class="loot-filter-row">
+                <label class="field loot-filter-field">
+                  <span>Filter Type</span>
+                  <select id="loot-type-filter">
+                    <option value="">All types</option>
+                  </select>
+                </label>
+                <label class="field loot-filter-field">
+                  <span>Sort By</span>
+                  <select id="loot-sort-by">
+                    <option value="name">Name</option>
+                    <option value="type">Type</option>
+                    <option value="cost">Cost</option>
+                  </select>
+                </label>
+                <label class="field loot-filter-field">
+                  <span>Sort Order</span>
+                  <select id="loot-sort-dir">
+                    <option value="asc">Ascending</option>
+                    <option value="desc">Descending</option>
+                  </select>
+                </label>
+              </div>
               <p class="hint loot-hint">Given a GP budget, returns affordable items.</p>
               <div id="loot-status" class="loot-status" role="status" aria-live="polite"></div>
               <div id="loot-error" class="alert error" hidden></div>
