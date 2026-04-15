@@ -5,6 +5,7 @@
 
   var budgetInput = document.getElementById("loot-budget");
   var searchBtn = document.getElementById("loot-search");
+  var showAllBtn = document.getElementById("loot-show-all");
   var statusEl = document.getElementById("loot-status");
   var errEl = document.getElementById("loot-error");
   var tableWrap = document.getElementById("loot-table-wrap");
@@ -538,15 +539,17 @@
     }
   }
 
-  function runSearch() {
+  function runSearch(opts) {
+    var showAll = !!(opts && opts.showAll);
     clearError();
     var budget = Number(budgetInput.value);
-    if (budgetInput.value.trim() === "" || isNaN(budget) || budget < 0) {
+    if (!showAll && (budgetInput.value.trim() === "" || isNaN(budget) || budget < 0)) {
       showError("Enter a valid budget (0 or more gold pieces).");
       return;
     }
     setStatus("Loading spreadsheet…");
     searchBtn.disabled = true;
+    if (showAllBtn) showAllBtn.disabled = true;
     loadWorkbook()
       .then(function (wb) {
         var built = buildRowsFromSheet(wb);
@@ -558,13 +561,18 @@
         budgetFiltered = built.rows.filter(function (row) {
           var c = parseCost(row[ck]);
           if (isNaN(c)) return false;
-          return c <= budget;
+          return showAll || c <= budget;
         });
         sortCol = headers[0] || "";
         sortDir = 1;
         colFilters = {};
         page = 1;
-        setStatus("Found " + budgetFiltered.length + " items within " + budget + " gp.");
+        if (showAll) {
+          budgetInput.value = "";
+          setStatus("Showing all " + budgetFiltered.length + " items.");
+        } else {
+          setStatus("Found " + budgetFiltered.length + " items within " + budget + " gp.");
+        }
         renderTable();
       })
       .catch(function (e) {
@@ -574,10 +582,18 @@
       })
       .then(function () {
         searchBtn.disabled = false;
+        if (showAllBtn) showAllBtn.disabled = false;
       });
   }
 
-  searchBtn.addEventListener("click", runSearch);
+  searchBtn.addEventListener("click", function () {
+    runSearch({ showAll: false });
+  });
+  if (showAllBtn) {
+    showAllBtn.addEventListener("click", function () {
+      runSearch({ showAll: true });
+    });
+  }
 
   cartClear.addEventListener("click", clearCart);
   if (cartCheckout && checkoutWrap && checkoutOutput) {
