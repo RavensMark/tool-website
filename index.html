@@ -35,7 +35,7 @@
       <div class="panel-inner">
         <header class="panel-head">
           <h2>BoopSum</h2>
-          <p class="lede">Loot calculation for DMs — ported from the familiar tally. Enter <strong>total adjusted XP</strong> for gold; award XP using non-adjusted totals at the table.</p>
+          <p class="lede">Loot calculation for DMs.</p>
         </header>
 
         <form id="boopsum-form" class="card form-grid">
@@ -99,7 +99,7 @@
       <div class="panel-inner loot-panel-inner">
         <header class="panel-head">
           <h2>Loot</h2>
-          <p class="lede">Browse magic items from the roster spreadsheet by budget. Everything runs in your browser; there is no server.</p>
+          <p class="lede">Browse loot items from the spreadsheet. Budget your gold.</p>
         </header>
 
         <div class="loot-layout">
@@ -113,7 +113,7 @@
                 <button type="button" class="btn primary" id="loot-search">Search within budget</button>
                 <button type="button" class="btn ghost" id="loot-show-all">Show all</button>
               </div>
-              <p class="hint loot-hint">Shows items whose <strong>Cost (GP)</strong> is less than or equal to your budget. Use column filters and header clicks to narrow and sort the list.</p>
+              <p class="hint loot-hint">Given a GP budget, returns affordable items.</p>
               <div id="loot-status" class="loot-status" role="status" aria-live="polite"></div>
               <div id="loot-error" class="alert error" hidden></div>
             </div>
@@ -160,9 +160,7 @@
         <header class="panel-head">
           <h2>Staff Points</h2>
           <p class="lede">
-            Look up your balance from the
-            <a href="https://spark-lamprey-fd4.notion.site/Staff-Point-Totals-273b85f5f93180a3a0ede17565995097" target="_blank" rel="noopener noreferrer">Staff Point Totals</a>
-            roster (published sheet). Matching ignores letter case.
+            Case Insensitive.
           </p>
         </header>
 
@@ -189,7 +187,6 @@
 
         <div class="card staff-rewards-card">
           <h3 class="staff-rewards-title">Rewards</h3>
-          <p class="hint staff-rewards-hint">Rows you cannot afford yet are dimmed like sealed scrolls.</p>
           <div class="staff-lookup-row">
             <label class="field staff-username-field">
               <span>Level</span>
@@ -216,7 +213,7 @@
       <div class="panel-inner">
         <header class="panel-head">
           <h2>Quest Info</h2>
-          <p class="lede">Mark the nestling trail: rank, format, length, difficulty, and content warnings. The scroll below updates as you choose.</p>
+          <p class="lede">A visual Quest Posting builder</p>
         </header>
 
         <div class="card questinfo-form">
@@ -253,7 +250,6 @@
 
           <fieldset class="questinfo-fieldset questinfo-cw-fieldset">
             <legend>Content warnings</legend>
-            <p class="hint questinfo-cw-hint">Labels from the <a href="https://triggerwarningdatabase.com/masterlist-tw/" rel="noopener noreferrer">Trigger Warning Database</a> master list (local copy in <code>data/content-warnings.csv</code>). Filter and tick any that apply.</p>
             <div id="qi-cw-status" class="questinfo-cw-status" role="status" aria-live="polite"></div>
             <label class="field questinfo-cw-filter">
               <span>Filter warnings</span>
@@ -269,7 +265,7 @@
 
         <div class="card questinfo-output-card">
           <h3 class="questinfo-output-title">Markdown</h3>
-          <p class="hint questinfo-output-hint">Copy this block into Discord, a forum post, or your chronicle.</p>
+          <p class="hint questinfo-output-hint">Copy this block into Discord.</p>
           <label class="field">
             <span class="sr-only">Generated markdown</span>
             <textarea id="qi-md-output" class="questinfo-md-output" readonly rows="14" spellcheck="false"></textarea>
