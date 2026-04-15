@@ -3,9 +3,9 @@
     "https://docs.google.com/spreadsheets/d/e/2PACX-1vSH9cqtzXf0D5gSXfiueKRmSufsZrdWEvsIF_umg2G2ND1OYEry6Y-JcR36rM5W1JrNcR3E0HYVvPP8/pub?output=csv&gid=553653062";
 
   var REWARDS = [
-    { key: "xp_gp", name: "XP + GP", cost: 30 },
-    { key: "xp", name: "XP", cost: 60 },
-    { key: "gp", name: "GP", cost: 120 },
+    { key: "xp_gp", name: "XP + GP", cost: 1 },
+    { key: "xp", name: "XP", cost: 1 },
+    { key: "gp", name: "GP", cost: 1 },
     { key: "common_gacha", name: "Common Item (Gacha)", cost: 10 },
     { key: "common_item", name: "Custom Common Item", cost: 30 },
     { key: "uncommon_item", name: "Custom Uncommon Item", cost: 60 },
@@ -212,7 +212,10 @@
     if (reward.key === "xp") {
       return calc.xp + " XP (max " + calc.monthlyXpMax + " XP/month)";
     }
-    return calc.gp + " GP (max " + calc.monthlyGpMax + " GP/month)";
+    if (reward.key === "gp") {
+      return calc.gp + " GP (max " + calc.monthlyGpMax + " GP/month)";
+    }
+    return ""
   }
 
   function renderRewards(balance) {
