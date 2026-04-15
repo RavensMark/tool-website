@@ -196,16 +196,13 @@
     lines.push("### Content warnings");
     var cw = selectedWarningsSorted();
     if (!cw.length) {
-      lines.push("_None selected._");
+      lines.push("Unspecified");
     } else {
       cw.forEach(function (w) {
         lines.push("- " + mdEscapeInline(w));
       });
     }
     lines.push("");
-    lines.push(
-      "_Warning labels drawn from the [Trigger Warning Database](https://triggerwarningdatabase.com/masterlist-tw/) master list._"
-    );
     mdOutEl.value = lines.join("\n");
   }
 
