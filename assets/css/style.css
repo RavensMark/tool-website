@@ -212,7 +212,21 @@ body.tab-wide main {
   color: var(--parchment);
 }
 
+.field select {
+  font: inherit;
+  padding: 0.55rem 0.75rem;
+  border-radius: 8px;
+  border: 1px solid rgba(201, 162, 39, 0.25);
+  background: rgba(12, 10, 15, 0.8);
+  color: var(--parchment);
+}
+
 .field input:focus {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+.field select:focus {
   outline: 2px solid var(--gold);
   outline-offset: 2px;
 }
@@ -722,6 +736,17 @@ small {
 
 .loot-hint {
   margin: 0.75rem 0 0;
+}
+
+.loot-controls .loot-filter-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+  gap: 0.75rem 1rem;
+  margin-top: 0.9rem;
+}
+
+.loot-filter-field {
+  min-width: 0;
 }
 
 .loot-status {

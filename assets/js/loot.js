@@ -6,6 +6,9 @@
   var budgetInput = document.getElementById("loot-budget");
   var searchBtn = document.getElementById("loot-search");
   var showAllBtn = document.getElementById("loot-show-all");
+  var typeFilterEl = document.getElementById("loot-type-filter");
+  var sortByEl = document.getElementById("loot-sort-by");
+  var sortDirEl = document.getElementById("loot-sort-dir");
   var statusEl = document.getElementById("loot-status");
   var errEl = document.getElementById("loot-error");
   var tableWrap = document.getElementById("loot-table-wrap");
@@ -185,7 +188,68 @@
   }
 
   function rowsForDisplay() {
-    return budgetFiltered.slice();
+    var out = budgetFiltered.slice();
+    var typeFilter = typeFilterEl ? String(typeFilterEl.value || "").trim() : "";
+    if (typeFilter) {
+      out = out.filter(function (row) {
+        return cellStr(row, displayKeys.type).trim() === typeFilter;
+      });
+    }
+
+    var sortBy = sortByEl ? sortByEl.value : "name";
+    var sortDir = sortDirEl && sortDirEl.value === "desc" ? -1 : 1;
+    out.sort(function (a, b) {
+      if (sortBy === "cost") {
+        var ac = parseCost(a[displayKeys.cost]);
+        var bc = parseCost(b[displayKeys.cost]);
+        if (isNaN(ac)) ac = Number.POSITIVE_INFINITY;
+        if (isNaN(bc)) bc = Number.POSITIVE_INFINITY;
+        if (ac < bc) return -1 * sortDir;
+        if (ac > bc) return 1 * sortDir;
+      } else {
+        var k = sortBy === "type" ? displayKeys.type : displayKeys.name;
+        var av = cellStr(a, k).toLowerCase();
+        var bv = cellStr(b, k).toLowerCase();
+        if (av < bv) return -1 * sortDir;
+        if (av > bv) return 1 * sortDir;
+      }
+      var an = cellStr(a, displayKeys.name).toLowerCase();
+      var bn = cellStr(b, displayKeys.name).toLowerCase();
+      if (an < bn) return -1;
+      if (an > bn) return 1;
+      return 0;
+    });
+    return out;
+  }
+
+  function refreshTypeFilterOptions() {
+    if (!typeFilterEl) return;
+    var selected = String(typeFilterEl.value || "");
+    var seen = {};
+    var types = [];
+    for (var i = 0; i < budgetFiltered.length; i++) {
+      var typeVal = cellStr(budgetFiltered[i], displayKeys.type).trim();
+      if (!typeVal) continue;
+      if (seen[typeVal]) continue;
+      seen[typeVal] = true;
+      types.push(typeVal);
+    }
+    types.sort(function (a, b) {
+      return a.localeCompare(b);
+    });
+
+    typeFilterEl.innerHTML = "";
+    var allOpt = document.createElement("option");
+    allOpt.value = "";
+    allOpt.textContent = "All types";
+    typeFilterEl.appendChild(allOpt);
+    for (var t = 0; t < types.length; t++) {
+      var opt = document.createElement("option");
+      opt.value = types[t];
+      opt.textContent = types[t];
+      typeFilterEl.appendChild(opt);
+    }
+    typeFilterEl.value = seen[selected] ? selected : "";
   }
 
   function makeLinkEl(url, label) {
@@ -585,6 +649,7 @@
         } else {
           setStatus("Found " + budgetFiltered.length + " items within " + budget + " gp.");
         }
+        refreshTypeFilterOptions();
         renderTable();
       })
       .catch(function (e) {
@@ -604,6 +669,24 @@
   if (showAllBtn) {
     showAllBtn.addEventListener("click", function () {
       runSearch({ showAll: true });
+    });
+  }
+  if (typeFilterEl) {
+    typeFilterEl.addEventListener("change", function () {
+      page = 1;
+      renderTable();
+    });
+  }
+  if (sortByEl) {
+    sortByEl.addEventListener("change", function () {
+      page = 1;
+      renderTable();
+    });
+  }
+  if (sortDirEl) {
+    sortDirEl.addEventListener("change", function () {
+      page = 1;
+      renderTable();
     });
   }
 
