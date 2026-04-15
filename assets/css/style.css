@@ -464,6 +464,16 @@ body.tab-wide main {
   border-top: 1px solid rgba(107, 91, 122, 0.35);
 }
 
+.site-footer a {
+  color: var(--gold);
+  text-underline-offset: 0.18em;
+}
+
+.site-footer a:hover,
+.site-footer a:focus-visible {
+  color: var(--parchment);
+}
+
 small {
   font-size: 0.85em;
   opacity: 0.9;
