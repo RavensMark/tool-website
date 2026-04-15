@@ -3,12 +3,18 @@
     "https://docs.google.com/spreadsheets/d/e/2PACX-1vSH9cqtzXf0D5gSXfiueKRmSufsZrdWEvsIF_umg2G2ND1OYEry6Y-JcR36rM5W1JrNcR3E0HYVvPP8/pub?output=csv&gid=553653062";
 
   var REWARDS = [
-    { name: "Common Item Request", cost: 30 },
-    { name: "Uncommon Item Request", cost: 60 },
-    { name: "Rare Item Request", cost: 120 },
+    { key: "xp_gp", name: "XP + GP", cost: 30 },
+    { key: "xp", name: "XP", cost: 60 },
+    { key: "gp", name: "GP", cost: 120 },
   ];
 
+  var DM_LIMITS = [0, 75, 150, 450, 950, 1875, 2250, 3500, 4000, 5250, 3750, 5000, 5000, 6250, 7500, 7500, 10000, 10000, 12500, 12500, 12500];
+  var HALF_PROF = [0, 1, 1, 1, 1, 1.5, 1.5, 1.5, 1.5, 2, 2, 2, 2, 2.5, 2.5, 2.5, 2.5, 3, 3, 3, 3];
+  var D_MOD = [0.5, 0.75, 1];
+  var GP_MOD = [0, 0.1, 0.1, 0.1, 0.1, 0.25, 0.25, 0.25, 0.25, 0.55, 0.55, 0.55, 0.55, 0.8, 0.8, 0.8, 0.8, 1.05, 1.05, 1.05, 1.05];
+
   var userInput = document.getElementById("staff-username");
+  var levelInput = document.getElementById("staff-level");
   var lookupBtn = document.getElementById("staff-lookup");
   var statusEl = document.getElementById("staff-status");
   var errEl = document.getElementById("staff-error");
@@ -16,7 +22,7 @@
   var balanceEl = document.getElementById("staff-balance");
   var rewardsBody = document.getElementById("staff-rewards-tbody");
 
-  if (!lookupBtn || !userInput || !rewardsBody) return;
+  if (!lookupBtn || !userInput || !rewardsBody || !levelInput) return;
 
   var workbookCache = null;
 
@@ -163,9 +169,52 @@
     return null;
   }
 
+  function getLevel() {
+    var raw = Number(levelInput.value);
+    if (isNaN(raw)) raw = 1;
+    var whole = Math.floor(raw);
+    if (whole < 1) whole = 1;
+    if (whole > 20) whole = 20;
+    return whole;
+  }
+
+  function calcDmRewards(level) {
+    var idx = Math.max(0, Math.min(20, level));
+    var cap = DM_LIMITS[idx + 1] || 0;
+    var dmXp = Math.floor(cap / 6);
+    dmXp = 5 * Math.round(dmXp / 5);
+    var dmGp = Math.floor(dmXp * HALF_PROF[idx] * D_MOD[2] * GP_MOD[idx]);
+    return {
+      xp: dmXp,
+      gp: dmGp,
+      monthlyXpMax: dmXp * 6,
+      monthlyGpMax: dmGp * 6,
+    };
+  }
+
+  function rewardAmountText(reward, calc) {
+    if (reward.key === "xp_gp") {
+      return (
+        calc.xp +
+        " XP + " +
+        calc.gp +
+        " GP (max " +
+        calc.monthlyXpMax +
+        " XP + " +
+        calc.monthlyGpMax +
+        " GP/month)"
+      );
+    }
+    if (reward.key === "xp") {
+      return calc.xp + " XP (max " + calc.monthlyXpMax + " XP/month)";
+    }
+    return calc.gp + " GP (max " + calc.monthlyGpMax + " GP/month)";
+  }
+
   function renderRewards(balance) {
     rewardsBody.innerHTML = "";
     var known = typeof balance === "number" && !isNaN(balance);
+    var calc = calcDmRewards(getLevel());
     for (var i = 0; i < REWARDS.length; i++) {
       var rw = REWARDS[i];
       var tr = document.createElement("tr");
@@ -175,8 +224,11 @@
       tdName.textContent = rw.name;
       var tdCost = document.createElement("td");
       tdCost.textContent = rw.cost + " SP";
+      var tdAmount = document.createElement("td");
+      tdAmount.textContent = rewardAmountText(rw, calc);
       tr.appendChild(tdName);
       tr.appendChild(tdCost);
+      tr.appendChild(tdAmount);
       rewardsBody.appendChild(tr);
     }
   }
@@ -216,6 +268,15 @@
       ev.preventDefault();
       runLookup();
     }
+  });
+  levelInput.addEventListener("change", function () {
+    levelInput.value = String(getLevel());
+    var currentBalance = Number(balanceEl.textContent);
+    if (!isNaN(currentBalance)) {
+      renderRewards(currentBalance);
+      return;
+    }
+    renderRewards(null);
   });
 
   window.addEventListener("rmtools-tab", function (ev) {
