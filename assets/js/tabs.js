@@ -4,6 +4,7 @@
   var brandHome = document.getElementById('brand-home');
   var landingTiles = document.querySelectorAll('[data-open-tab]');
   var dmOnlyPanels = ['boopsum', 'staff', 'questinfo'];
+  var MODE_STORAGE_KEY = 'rm-ui-mode-v1';
   var panels = {
     home: document.getElementById('panel-home'),
     boopsum: document.getElementById('panel-boopsum'),
@@ -34,6 +35,14 @@
       panel.hidden = !on;
     });
     window.dispatchEvent(new CustomEvent('rmtools-tab', { detail: { tab: name } }));
+  }
+
+  function saveMode(isDm) {
+    localStorage.setItem(MODE_STORAGE_KEY, isDm ? 'dm' : 'player');
+  }
+
+  function readSavedMode() {
+    return localStorage.getItem(MODE_STORAGE_KEY) === 'dm';
   }
 
   function applyMode(isDm) {
@@ -67,9 +76,10 @@
   if (modeToggle) {
     modeToggle.addEventListener('change', function () {
       applyMode(modeToggle.checked);
+      saveMode(modeToggle.checked);
     });
   }
 
-  applyMode(false);
+  applyMode(readSavedMode());
   activate('home');
 })();
