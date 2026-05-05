@@ -37,7 +37,6 @@
       <button type="button" class="tab dm-only" role="tab" id="tab-staff" aria-selected="false" aria-controls="panel-staff" data-tab="staff">Staff Points</button>
       <button type="button" class="tab dm-only" role="tab" id="tab-questinfo" aria-selected="false" aria-controls="panel-questinfo" data-tab="questinfo">Quest Info</button>
       <button type="button" class="tab" role="tab" id="tab-questnotes" aria-selected="false" aria-controls="panel-questnotes" data-tab="questnotes">Quest Notes</button>
-      <button type="button" class="tab" role="tab" id="tab-character" aria-selected="false" aria-controls="panel-character" data-tab="character">Character Creation</button>
       <button type="button" class="tab" role="tab" id="tab-avrae" aria-selected="false" aria-controls="panel-avrae" data-tab="avrae">Avrae</button>
       <button type="button" class="tab" role="tab" id="tab-links" aria-selected="false" aria-controls="panel-links" data-tab="links">Useful Links</button>
     </nav>
@@ -73,10 +72,6 @@
             <button type="button" class="landing-tile" data-open-tab="questnotes">
               <h3><span class="landing-tile-icon" aria-hidden="true">📝</span>Quest Notes</h3>
               <p>A place to make notes for your quest.</p>
-            </button>
-            <button type="button" class="landing-tile" data-open-tab="character">
-              <h3><span class="landing-tile-icon" aria-hidden="true">🧙</span>Character Creation</h3>
-              <p>Point buy, HP calculator, and a quick player setup checklist.</p>
             </button>
             <button type="button" class="landing-tile" data-open-tab="avrae">
               <h3><span class="landing-tile-icon" aria-hidden="true">🧠</span>Avrae Assistants</h3>
@@ -490,72 +485,6 @@
         </div>
       </div>
     </section>
-
-    <section id="panel-character" class="panel" role="tabpanel" aria-labelledby="tab-character" hidden>
-      <div class="panel-inner">
-        <header class="panel-head">
-          <h2>Character Creation</h2>
-          <p class="lede">Tools for building and validating a new character.</p>
-        </header>
-
-        <div class="card character-card">
-          <h3>Point Buy Calculator</h3>
-          <div class="character-stats-grid" id="cc-stats-grid"></div>
-          <div class="character-asi-row">
-            <button type="button" class="btn ghost" id="cc-open-asi">Choose background ASIs</button>
-            <p class="hint" id="cc-asi-summary">No ASIs selected.</p>
-          </div>
-          <div class="character-total-row">
-            <label class="character-ngplus-check"><input type="checkbox" id="cc-ngplus" /> <span>NG+</span></label>
-            <p class="character-point-total">Point Buy Total: <strong id="cc-point-total">0</strong> / <span id="cc-point-limit">27</span></p>
-          </div>
-        </div>
-
-        <div class="card character-card">
-          <h3>Health Calculator</h3>
-          <p class="hint">Add each class and level split. HP uses max at first level, then fixed average for later levels.</p>
-          <div id="cc-classes"></div>
-          <div class="character-actions-row">
-            <button type="button" class="btn ghost" id="cc-add-class">Add class levels</button>
-          </div>
-          <label class="character-ngplus-check"><input type="checkbox" id="cc-tough" /> <span>Tough Feat</span></label>
-          <p class="character-point-total">Expected HP: <strong id="cc-hp-total">0</strong></p>
-        </div>
-
-        <div class="card character-card">
-          <h3>Checklist</h3>
-          <ul class="character-checklist">
-            <li><label><input type="checkbox" id="cc-check-class" /> My Class is in the list of approved classes (<a href="https://ravensmark.fandom.com/wiki/Approved_Classes/Subclasses" target="_blank" rel="noopener noreferrer">link</a>)</label></li>
-            <li><label><input type="checkbox" id="cc-check-species" /> My Species is in the list of approved species (<a href="https://ravensmark.fandom.com/wiki/Approved_Species" target="_blank" rel="noopener noreferrer">link</a>)</label></li>
-            <li><label><input type="checkbox" id="cc-check-language" /> My Languages are in the list of approved languages (<a href="https://ravensmark.fandom.com/wiki/Approved_Languages" target="_blank" rel="noopener noreferrer">link</a>)</label></li>
-            <li><label><input type="checkbox" id="cc-check-feat" /> I have chosen a free feat</label></li>
-            <li><label><input type="checkbox" id="cc-check-potion" /> I have taken my free potion</label></li>
-            <li><label><input type="checkbox" id="cc-check-backstory" /> I have a rough backstory</label></li>
-          </ul>
-        </div>
-
-        <div class="card character-card">
-          <h3>Character Summary (Markdown)</h3>
-          <p class="hint">Copy this block for submissions or notes.</p>
-          <div class="copyable-output" data-copy-target="#cc-markdown-output">
-            <textarea id="cc-markdown-output" class="questinfo-md-output mono-output" readonly rows="9" spellcheck="false"></textarea>
-            <button type="button" class="btn ghost copyable-output-btn" aria-label="Copy character summary markdown">Copy</button>
-          </div>
-        </div>
-      </div>
-
-      <dialog id="cc-asi-dialog" class="character-dialog">
-        <form method="dialog" class="character-dialog-body">
-          <h3>Background ASIs</h3>
-          <p class="hint">Pick up to three total +1 boosts across stats. These are subtracted from point buy values.</p>
-          <div id="cc-asi-controls" class="character-asi-controls"></div>
-          <div class="character-actions-row">
-            <button type="button" class="btn ghost" id="cc-asi-reset">Reset</button>
-            <button type="submit" class="btn primary">Done</button>
-          </div>
-        </form>
-      </dialog>
-    </section>
     <section id="panel-links" class="panel" role="tabpanel" aria-labelledby="tab-links" hidden>
       <div class="panel-inner">
         <header class="panel-head">
@@ -633,7 +562,6 @@
   <script src="assets/js/questnotes.js"></script>
   <script src="assets/js/staff.js"></script>
   <script src="assets/js/loot.js"></script>
-  <script src="assets/js/character.js"></script>
   <script src="assets/js/avrae.js"></script>
   <script src="assets/js/copyable.js"></script>
 </body>

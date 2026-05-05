@@ -1502,10 +1502,9 @@ small {
 }
 .character-stats-grid {
   display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
   gap: 0.75rem;
 }
-.character-stats-grid .field span { font-size: 0.95rem; }
 .character-stats-grid small { color: var(--parchment-muted); font-size: 0.85rem; }
 .character-asi-row, .character-total-row, .character-actions-row {
   margin-top: 0.75rem;
@@ -1531,9 +1530,3 @@ small {
 .character-dialog::backdrop { background: rgba(0,0,0,0.65); }
 .character-dialog-body { padding: 1rem; }
 .character-asi-controls { display: grid; grid-template-columns: repeat(auto-fit,minmax(9rem,1fr)); gap: 0.6rem; }
-
-@media (max-width: 760px) {
-  .character-stats-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-}
