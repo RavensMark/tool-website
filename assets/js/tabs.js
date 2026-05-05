@@ -12,6 +12,7 @@
     staff: document.getElementById('panel-staff'),
     questinfo: document.getElementById('panel-questinfo'),
     questnotes: document.getElementById('panel-questnotes'),
+    character: document.getElementById('panel-character'),
     avrae: document.getElementById('panel-avrae'),
     links: document.getElementById('panel-links'),
   };
