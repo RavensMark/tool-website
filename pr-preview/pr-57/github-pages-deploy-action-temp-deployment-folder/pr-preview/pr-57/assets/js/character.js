@@ -118,11 +118,13 @@
 
 
   function equipmentChoiceLine() {
-    return [
-      '- Starting Equipment Choice:',
-      '  - I have taken the default equipment for my class',
-      '  - I have taken gold instead of items'
-    ].join('\n');
+    if (document.getElementById('cc-check-default-equipment').checked) {
+      return '- [✔] Starting Equipment: Default class equipment';
+    }
+    if (document.getElementById('cc-check-gold-instead').checked) {
+      return '- [✔] Starting Equipment: Gold instead of items';
+    }
+    return '- [✘] Starting Equipment: Not selected';
   }
 
   function refreshMarkdown() {
