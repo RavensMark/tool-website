@@ -70,7 +70,7 @@
     pointLimit.textContent = String(limit);
     pointTotal.textContent = String(finalTotal);
     pointTotal.style.color = finalTotal > limit ? 'var(--danger)' : 'var(--parchment)';
-    asiSummary.textContent = asiText.length ? ('ASIs selected: ' + asiText.join(', ')) : 'No ASIs selected.';
+    asiSummary.textContent = asiText.length ? ('ASIs selected: ' + asiText.join(', ') + ' (Total: ' + asiTotal + '/3)') : 'No ASIs selected. (Total: 0/3)';
     refreshMarkdown();
   }
 
@@ -116,6 +116,17 @@
     return parts.length ? parts.join('/') : 'None';
   }
 
+
+  function equipmentChoiceLine() {
+    if (document.getElementById('cc-check-default-equipment').checked) {
+      return '- [✔] Starting Equipment: Default class equipment';
+    }
+    if (document.getElementById('cc-check-gold-instead').checked) {
+      return '- [✔] Starting Equipment: Gold instead of items';
+    }
+    return '- [✘] Starting Equipment: Not selected';
+  }
+
   function refreshMarkdown() {
     if (!markdownOutput) return;
     var pointValue = Number(pointTotal.textContent || 0);
@@ -134,6 +145,7 @@
       '- [' + checkMark('cc-check-language') + '] Approved Language',
       '- [' + checkMark('cc-check-feat') + '] Taken Feat',
       '- [' + checkMark('cc-check-potion') + '] Taken Potion',
+      equipmentChoiceLine(),
       '- [' + checkMark('cc-check-backstory') + '] Rough Backstory'
     ].join('\n');
   }
@@ -188,6 +200,13 @@
     if (!event.target.matches('input[data-asi-stat]')) return;
     var stat = event.target.getAttribute('data-asi-stat');
     var value = Math.max(0, Math.min(3, Number(event.target.value || 0)));
+    var usedByOthers = 0;
+    STATS.forEach(function (key) {
+      if (key === stat) return;
+      usedByOthers += asiValues[key] || 0;
+    });
+    var allowedForStat = Math.max(0, 3 - usedByOthers);
+    value = Math.min(value, allowedForStat);
     event.target.value = value;
     asiValues[stat] = value;
     refreshPointBuy();
@@ -207,7 +226,7 @@
   ngPlus.addEventListener('change', refreshPointBuy);
   document.getElementById('cc-add-class').addEventListener('click', addClassRow);
   document.getElementById('cc-tough').addEventListener('change', refreshHp);
-  document.querySelectorAll('#panel-character .character-checklist input[type="checkbox"]').forEach(function (box) {
+  document.querySelectorAll('#panel-character .character-checklist input[type="checkbox"], #panel-character .character-checklist input[type="radio"]').forEach(function (box) {
     box.addEventListener('change', refreshMarkdown);
   });
 

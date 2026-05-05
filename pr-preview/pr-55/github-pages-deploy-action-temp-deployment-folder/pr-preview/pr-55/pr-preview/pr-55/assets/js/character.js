@@ -14,6 +14,7 @@
   var pointLimit = document.getElementById('cc-point-limit');
   var classesWrap = document.getElementById('cc-classes');
   var hpTotal = document.getElementById('cc-hp-total');
+  var markdownOutput = document.getElementById('cc-markdown-output');
 
   var asiValues = {};
   var classRows = [];
@@ -70,6 +71,7 @@
     pointTotal.textContent = String(finalTotal);
     pointTotal.style.color = finalTotal > limit ? 'var(--danger)' : 'var(--parchment)';
     asiSummary.textContent = asiText.length ? ('ASIs selected: ' + asiText.join(', ')) : 'No ASIs selected.';
+    refreshMarkdown();
   }
 
   function refreshHp() {
@@ -94,6 +96,46 @@
 
     if (document.getElementById('cc-tough').checked) totalHp += totalLevels * 2;
     hpTotal.textContent = String(Math.max(0, totalHp));
+    refreshMarkdown();
+  }
+
+  function checkMark(id) {
+    var box = document.getElementById(id);
+    return box && box.checked ? '✔' : '✘';
+  }
+
+  function classSummary() {
+    var parts = [];
+    classRows.forEach(function (row) {
+      var levels = Math.max(0, Number(row.levelInput.value || 0));
+      if (!levels) return;
+      var label = row.classSelect.options[row.classSelect.selectedIndex].textContent;
+      var className = label.split(' (')[0];
+      parts.push(className + ' ' + levels);
+    });
+    return parts.length ? parts.join('/') : 'None';
+  }
+
+  function refreshMarkdown() {
+    if (!markdownOutput) return;
+    var pointValue = Number(pointTotal.textContent || 0);
+    var pointCap = Number(pointLimit.textContent || 27);
+    var hpValue = Number(hpTotal.textContent || 0);
+    var ng = ngPlus.checked ? 'TRUE' : 'FALSE';
+    var tough = document.getElementById('cc-tough').checked ? 'TRUE' : 'FALSE';
+    var pointMark = pointValue <= pointCap ? '✔' : '✘';
+
+    markdownOutput.value = [
+      'Classes: ' + classSummary(),
+      '- [' + pointMark + '] Point Buy: ' + pointValue + '/' + pointCap + ' [NG+: ' + ng + ']',
+      '- [✔] Health: ' + hpValue + '/' + hpValue + ' [Tough: ' + tough + ']',
+      '- [' + checkMark('cc-check-class') + '] Approved Class',
+      '- [' + checkMark('cc-check-species') + '] Approved Species',
+      '- [' + checkMark('cc-check-language') + '] Approved Language',
+      '- [' + checkMark('cc-check-feat') + '] Taken Feat',
+      '- [' + checkMark('cc-check-potion') + '] Taken Potion',
+      '- [' + checkMark('cc-check-backstory') + '] Rough Backstory'
+    ].join('\n');
   }
 
   function addClassRow() {
@@ -165,7 +207,11 @@
   ngPlus.addEventListener('change', refreshPointBuy);
   document.getElementById('cc-add-class').addEventListener('click', addClassRow);
   document.getElementById('cc-tough').addEventListener('change', refreshHp);
+  document.querySelectorAll('#panel-character .character-checklist input[type="checkbox"]').forEach(function (box) {
+    box.addEventListener('change', refreshMarkdown);
+  });
 
   addClassRow();
   refreshPointBuy();
+  refreshMarkdown();
 })();
