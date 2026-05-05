@@ -1,13 +1,13 @@
 :root {
-  --ink: #0c0a0f;
-  --soot: #16121c;
-  --plum: #2a1f35;
-  --moss: #3d2f4a;
-  --gold: #c9a227;
-  --gold-dim: #8a7020;
+  --ink: #08070c;
+  --soot: #121019;
+  --plum: #241a31;
+  --moss: #372b45;
+  --gold: #d4b24d;
+  --gold-dim: #9a7a2a;
   --parchment: #e8dcc4;
   --parchment-muted: #b8a88c;
-  --feather: #6b5b7a;
+  --feather: #7f6b92;
   --danger: #c44b4b;
   --radius: 12px;
   --shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
@@ -38,24 +38,46 @@ body {
   inset: 0;
   pointer-events: none;
   background:
-    radial-gradient(ellipse 120% 80% at 50% -20%, rgba(201, 162, 39, 0.12), transparent 55%),
-    radial-gradient(circle at 85% 20%, rgba(107, 91, 122, 0.2), transparent 40%),
+    radial-gradient(ellipse 130% 90% at 50% -25%, rgba(212, 178, 77, 0.16), transparent 58%),
+    radial-gradient(circle at 80% 18%, rgba(127, 107, 146, 0.24), transparent 42%),
+    radial-gradient(circle at 12% 22%, rgba(50, 40, 64, 0.4), transparent 44%),
     repeating-linear-gradient(
-      -18deg,
+      -22deg,
       transparent,
-      transparent 3px,
-      rgba(255, 255, 255, 0.02) 3px,
-      rgba(255, 255, 255, 0.02) 4px
+      transparent 4px,
+      rgba(255, 255, 255, 0.018) 4px,
+      rgba(255, 255, 255, 0.018) 5px
     ),
     var(--ink);
   z-index: -1;
+}
+
+
+.page-bg::before,
+.page-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.page-bg::before {
+  background:
+    radial-gradient(circle at 22% 16%, rgba(212, 178, 77, 0.08), transparent 26%),
+    radial-gradient(circle at 78% 14%, rgba(212, 178, 77, 0.07), transparent 24%),
+    radial-gradient(circle at 48% 32%, rgba(255, 255, 255, 0.03), transparent 28%);
+  opacity: 0.9;
+}
+
+.page-bg::after {
+  mask-image: radial-gradient(circle at center, black 38%, transparent 88%);
+  background: linear-gradient(180deg, rgba(6, 6, 9, 0), rgba(6, 6, 9, 0.65));
 }
 
 .site-header {
   position: relative;
   padding: 1.25rem clamp(1rem, 4vw, 2.5rem);
   border-bottom: 1px solid rgba(201, 162, 39, 0.25);
-  background: linear-gradient(180deg, rgba(22, 18, 28, 0.95), rgba(12, 10, 15, 0.85));
+  background: linear-gradient(180deg, rgba(20, 16, 26, 0.96), rgba(8, 7, 12, 0.88));
   backdrop-filter: blur(8px);
   text-align: center;
 }
@@ -137,8 +159,14 @@ body.mode-player .dm-only {
 }
 
 .brand-icon {
-  font-size: 2.25rem;
-  filter: drop-shadow(0 0 12px rgba(201, 162, 39, 0.35));
+  font-size: 2.5rem;
+  filter: drop-shadow(0 0 14px rgba(212, 178, 77, 0.45));
+  animation: wing-beat 4.8s ease-in-out infinite;
+}
+
+@keyframes wing-beat {
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  50% { transform: translateY(-3px) rotate(2deg); }
 }
 
 .brand-icon-btn {
@@ -353,7 +381,7 @@ body.tab-wide main {
 }
 
 .card {
-  background: linear-gradient(145deg, rgba(42, 31, 53, 0.85), rgba(22, 18, 28, 0.9));
+  background: linear-gradient(152deg, rgba(43, 32, 56, 0.88), rgba(17, 14, 24, 0.94));
   border: 1px solid rgba(201, 162, 39, 0.2);
   border-radius: var(--radius);
   padding: 1.25rem 1.5rem;
