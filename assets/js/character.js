@@ -23,7 +23,7 @@
     asiValues[stat] = 0;
     var field = document.createElement('label');
     field.className = 'field';
-    field.innerHTML = '<span>' + stat + '</span><input type="number" min="8" max="15" step="1" value="8" data-stat="' + stat + '" /><small id="cc-mod-' + stat + '">Modifier: -1</small>';
+    field.innerHTML = '<span>' + stat + '</span><input type="number" min="8" max="15" step="1" value="8" data-stat="' + stat + '" /><small id="cc-mod-' + stat + '">-1</small>';
     statsGrid.appendChild(field);
   });
 
@@ -59,7 +59,7 @@
       statInput.value = score;
       total += POINT_COST[score] || 0;
       var mod = statMod(score);
-      document.getElementById('cc-mod-' + stat).textContent = 'Modifier: ' + (mod >= 0 ? '+' : '') + mod;
+      document.getElementById('cc-mod-' + stat).textContent = (mod >= 0 ? '+' : '') + mod;
 
       asiTotal += asiValues[stat] || 0;
       if (asiValues[stat]) asiText.push(stat + ' +' + asiValues[stat]);
@@ -128,7 +128,7 @@
     markdownOutput.value = [
       'Classes: ' + classSummary(),
       '- [' + pointMark + '] Point Buy: ' + pointValue + '/' + pointCap + ' [NG+: ' + ng + ']',
-      '- [✔] Health: ' + hpValue + '/' + hpValue + ' [Tough: ' + tough + ']',
+      '- [' + checkMark('cc-check-health-match') + '] Health: ' + hpValue + '/' + hpValue + ' [Tough: ' + tough + ']',
       '- [' + checkMark('cc-check-class') + '] Approved Class',
       '- [' + checkMark('cc-check-species') + '] Approved Species',
       '- [' + checkMark('cc-check-language') + '] Approved Language',
