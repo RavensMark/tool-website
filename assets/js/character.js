@@ -70,7 +70,7 @@
     pointLimit.textContent = String(limit);
     pointTotal.textContent = String(finalTotal);
     pointTotal.style.color = finalTotal > limit ? 'var(--danger)' : 'var(--parchment)';
-    asiSummary.textContent = asiText.length ? ('ASIs selected: ' + asiText.join(', ')) : 'No ASIs selected.';
+    asiSummary.textContent = asiText.length ? ('ASIs selected: ' + asiText.join(', ') + ' (Total: ' + asiTotal + '/3)') : 'No ASIs selected. (Total: 0/3)';
     refreshMarkdown();
   }
 
@@ -188,6 +188,13 @@
     if (!event.target.matches('input[data-asi-stat]')) return;
     var stat = event.target.getAttribute('data-asi-stat');
     var value = Math.max(0, Math.min(3, Number(event.target.value || 0)));
+    var usedByOthers = 0;
+    STATS.forEach(function (key) {
+      if (key === stat) return;
+      usedByOthers += asiValues[key] || 0;
+    });
+    var allowedForStat = Math.max(0, 3 - usedByOthers);
+    value = Math.min(value, allowedForStat);
     event.target.value = value;
     asiValues[stat] = value;
     refreshPointBuy();
