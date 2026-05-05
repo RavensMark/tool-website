@@ -1521,7 +1521,6 @@ small {
 .character-class-row select, .character-class-row input { width: 100%; }
 .character-checklist { margin: 0; padding-left: 1.2rem; }
 .character-checklist li { margin: 0.4rem 0; }
-.character-checklist ul { margin: 0.35rem 0 0 0; padding-left: 1.2rem; }
 .character-dialog {
   border: 1px solid rgba(201, 162, 39, 0.45);
   border-radius: var(--radius);
