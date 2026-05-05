@@ -116,6 +116,17 @@
     return parts.length ? parts.join('/') : 'None';
   }
 
+
+  function equipmentChoiceLine() {
+    if (document.getElementById('cc-check-default-equipment').checked) {
+      return '- [✔] Starting Equipment: Default class equipment';
+    }
+    if (document.getElementById('cc-check-gold-instead').checked) {
+      return '- [✔] Starting Equipment: Gold instead of items';
+    }
+    return '- [✘] Starting Equipment: Not selected';
+  }
+
   function refreshMarkdown() {
     if (!markdownOutput) return;
     var pointValue = Number(pointTotal.textContent || 0);
@@ -134,6 +145,7 @@
       '- [' + checkMark('cc-check-language') + '] Approved Language',
       '- [' + checkMark('cc-check-feat') + '] Taken Feat',
       '- [' + checkMark('cc-check-potion') + '] Taken Potion',
+      equipmentChoiceLine(),
       '- [' + checkMark('cc-check-backstory') + '] Rough Backstory'
     ].join('\n');
   }
@@ -214,7 +226,7 @@
   ngPlus.addEventListener('change', refreshPointBuy);
   document.getElementById('cc-add-class').addEventListener('click', addClassRow);
   document.getElementById('cc-tough').addEventListener('change', refreshHp);
-  document.querySelectorAll('#panel-character .character-checklist input[type="checkbox"]').forEach(function (box) {
+  document.querySelectorAll('#panel-character .character-checklist input[type="checkbox"], #panel-character .character-checklist input[type="radio"]').forEach(function (box) {
     box.addEventListener('change', refreshMarkdown);
   });
 
