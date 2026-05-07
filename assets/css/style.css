@@ -1396,6 +1396,11 @@ small {
   gap: 0.9rem;
 }
 
+.avrae-frame-card[hidden],
+.avrae-use-card[hidden] {
+  display: none !important;
+}
+
 .avrae-use-form {
   display: grid;
   gap: 1rem;
@@ -1474,6 +1479,14 @@ small {
 }
 
 #panel-avrae-use.show-advanced .avrae-use-advanced-only {
+  display: block;
+}
+
+#panel-avrae-equip .avrae-equip-advanced-only {
+  display: none;
+}
+
+#panel-avrae-equip.show-advanced-equip .avrae-equip-advanced-only {
   display: block;
 }
 
