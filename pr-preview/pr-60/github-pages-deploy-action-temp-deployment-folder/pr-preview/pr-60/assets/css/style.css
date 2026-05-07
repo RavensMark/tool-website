@@ -1450,14 +1450,6 @@ small {
   gap: 0.7rem;
 }
 
-.avrae-use-form .field > span[title]::after,
-.avrae-use-check-row label[title]::after {
-  content: " ⓘ";
-  color: var(--gold-dim);
-  font-size: 0.82em;
-  font-weight: 700;
-}
-
 .avrae-use-targets {
   display: grid;
   gap: 0.55rem;
@@ -1477,11 +1469,11 @@ small {
   margin-top: 0.3rem;
 }
 
-#avrae-use-builder .avrae-use-advanced-only {
+#panel-avrae-use .avrae-use-advanced-only {
   display: none;
 }
 
-#avrae-use-builder.show-advanced .avrae-use-advanced-only {
+#panel-avrae-use.show-advanced .avrae-use-advanced-only {
   display: block;
 }
 

@@ -1,6 +1,7 @@
 (function () {
-  var root = document.getElementById('avrae-use-builder');
-  if (!root) return;
+  var outputWrap = document.getElementById('avrae-use-builder');
+  var root = document.getElementById('panel-avrae-use');
+  if (!outputWrap || !root) return;
 
   var output = document.getElementById('avrae-use-output');
   var form = document.getElementById('avrae-use-form');
@@ -71,7 +72,7 @@
   }
 
   function collectCheckboxGroup(selector, parts) {
-    root.querySelectorAll(selector + ':checked').forEach(function (el) {
+    outputWrap.querySelectorAll(selector + ':checked').forEach(function (el) {
       var val = clean(el.value);
       if (val) parts.push(val);
     });
