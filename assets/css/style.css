@@ -1401,6 +1401,17 @@ small {
   gap: 1rem;
 }
 
+.avrae-use-form-topbar {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.avrae-use-advanced-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
 .avrae-use-group {
   border: 1px solid rgba(201, 162, 39, 0.26);
   border-radius: 0.8rem;
@@ -1413,6 +1424,18 @@ small {
   font-family: "Cinzel", serif;
   color: var(--gold);
   letter-spacing: 0.03em;
+}
+
+.avrae-use-subgroup {
+  border: 1px solid rgba(201, 162, 39, 0.22);
+  border-radius: 0.7rem;
+  padding: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.avrae-use-subgroup legend {
+  color: var(--parchment-muted);
+  font-size: 0.95rem;
 }
 
 .avrae-use-grid {
@@ -1452,6 +1475,14 @@ small {
 
 .avrae-use-output-wrap {
   margin-top: 0.3rem;
+}
+
+#avrae-use-builder .avrae-use-advanced-only {
+  display: none;
+}
+
+#avrae-use-builder.show-advanced .avrae-use-advanced-only {
+  display: block;
 }
 
 .questnotes-warning {
