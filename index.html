@@ -467,6 +467,7 @@
         <nav class="avrae-subtabs" role="tablist" aria-label="Avrae tools">
           <button type="button" class="avrae-subtab is-active" id="tab-avrae-general" role="tab" aria-selected="true" aria-controls="panel-avrae-general" data-avrae-subtab="general">General Use</button>
           <button type="button" class="avrae-subtab" id="tab-avrae-use" role="tab" aria-selected="false" aria-controls="panel-avrae-use" data-avrae-subtab="use">!use Builder</button>
+          <button type="button" class="avrae-subtab" id="tab-avrae-equip" role="tab" aria-selected="false" aria-controls="panel-avrae-equip" data-avrae-subtab="equip">!equip Builder</button>
           <button type="button" class="avrae-subtab" id="tab-avrae-combat" role="tab" aria-selected="false" aria-controls="panel-avrae-combat" data-avrae-subtab="combat">Combat Planning</button>
         </nav>
         <div class="card avrae-frame-card is-active" id="panel-avrae-general" role="tabpanel" aria-labelledby="tab-avrae-general" data-avrae-pane="general">
@@ -587,6 +588,52 @@
           <div class="copyable-output avrae-use-output-wrap" data-copy-target="#avrae-use-output" id="avrae-use-builder">
             <textarea id="avrae-use-output" class="questinfo-md-output mono-output" rows="6" readonly spellcheck="false"></textarea>
             <button type="button" class="btn ghost copyable-output-btn" aria-label="Copy use command">Copy</button>
+          </div>
+        </div>
+        <div class="card avrae-use-card" id="panel-avrae-equip" role="tabpanel" aria-labelledby="tab-avrae-equip" data-avrae-pane="equip" hidden>
+          <form id="avrae-equip-form" class="avrae-use-form">
+            <fieldset class="avrae-use-group">
+              <legend>Weapon</legend>
+              <div class="avrae-use-grid">
+                <label class="field"><span>Weapon</span><select id="avrae-equip-weapon"></select></label>
+                <label class="field"><span>Custom Name</span><input type="text" id="avrae-equip-name" placeholder="Frost Brand Shortsword" /></label>
+                <label class="field"><span>To Hit Bonus (-b)</span><input type="number" id="avrae-equip-bonus-hit" step="1" /></label>
+                <label class="field"><span>Damage Bonus (-d)</span><input type="number" id="avrae-equip-bonus-dmg" step="1" /></label>
+                <label class="field"><span>Stat Override</span><select id="avrae-equip-stat"><option value="">Default</option><option>str</option><option>dex</option><option>con</option><option>int</option><option>wis</option><option>cha</option></select></label>
+                <label class="field"><span>Target (-t)</span><input type="text" id="avrae-equip-target" placeholder="Target in initiative" /></label>
+                <label class="field"><span>Verb (-verb)</span><input type="text" id="avrae-equip-verb" placeholder="slashes" /></label>
+                <label class="field"><span>Crit On (-criton)</span><input type="number" id="avrae-equip-criton" min="2" max="20" step="1" /></label>
+                <label class="field"><span>Extra Crit Damage (-c)</span><input type="text" id="avrae-equip-crit-extra" placeholder="1d8" /></label>
+              </div>
+            </fieldset>
+
+            <fieldset class="avrae-use-group">
+              <legend>Flags</legend>
+              <div class="avrae-use-check-row">
+                <label><input type="checkbox" id="avrae-equip-nodmg" /> nodmg</label>
+                <label><input type="checkbox" id="avrae-equip-magical" /> magical</label>
+                <label><input type="checkbox" id="avrae-equip-adamantine" /> adamantine</label>
+                <label><input type="checkbox" id="avrae-equip-silvered" /> silvered</label>
+                <label><input type="checkbox" id="avrae-equip-monk" /> monk</label>
+                <label><input type="checkbox" id="avrae-equip-2h" /> 2h</label>
+                <label><input type="checkbox" id="avrae-equip-off" /> off</label>
+                <label><input type="checkbox" id="avrae-equip-savage" /> savage</label>
+                <label><input type="checkbox" id="avrae-equip-proper" /> proper</label>
+              </div>
+            </fieldset>
+
+            <fieldset class="avrae-use-group">
+              <legend>Fighting Styles</legend>
+              <div class="avrae-use-check-row">
+                <label><input type="checkbox" id="avrae-equip-archery" /> archery</label>
+                <label><input type="checkbox" id="avrae-equip-dueling" /> dueling</label>
+                <label><input type="checkbox" id="avrae-equip-gwf" /> gwf</label>
+              </div>
+            </fieldset>
+          </form>
+          <div class="copyable-output avrae-use-output-wrap" data-copy-target="#avrae-equip-output" id="avrae-equip-builder">
+            <textarea id="avrae-equip-output" class="questinfo-md-output mono-output" rows="4" readonly spellcheck="false"></textarea>
+            <button type="button" class="btn ghost copyable-output-btn" aria-label="Copy equip command">Copy</button>
           </div>
         </div>
       </div>
@@ -745,6 +792,7 @@
   <script src="assets/js/character.js"></script>
   <script src="assets/js/avrae.js"></script>
   <script src="assets/js/avrae-use-builder.js"></script>
+  <script src="assets/js/avrae-equip-builder.js"></script>
   <script src="assets/js/copyable.js"></script>
 </body>
 </html>
