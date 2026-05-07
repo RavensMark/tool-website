@@ -217,9 +217,11 @@
     if (!cw.length) {
       warnings += "—";
     } else {
+      warnings += "||";
       cw.forEach(function (warning, idx) {
         warnings += (idx ? ", " : "") + mdEscapeInline(warning);
       });
+      warnings += "||";
     }
     lines.push(warnings);
     lines.push("");
