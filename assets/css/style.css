@@ -902,6 +902,20 @@ small {
   gap: 0.35rem;
 }
 
+.questinfo-cw-group {
+  border: 1px solid rgba(201, 162, 39, 0.2);
+  border-radius: 8px;
+  padding: 0.25rem 0.5rem 0.4rem;
+  background: rgba(15, 12, 20, 0.45);
+}
+
+.questinfo-cw-group-title {
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--gold);
+  margin: 0.15rem 0 0.35rem;
+}
+
 .questinfo-cw-item {
   display: flex;
   align-items: flex-start;
