@@ -1,11 +1,13 @@
 (function () {
-  var root = document.getElementById('avrae-use-builder');
-  if (!root) return;
+  var outputWrap = document.getElementById('avrae-use-builder');
+  var root = document.getElementById('panel-avrae-use');
+  if (!outputWrap || !root) return;
 
   var output = document.getElementById('avrae-use-output');
   var form = document.getElementById('avrae-use-form');
   var targetsWrap = document.getElementById('avrae-use-targets');
   var addTargetBtn = document.getElementById('avrae-use-add-target');
+  var advancedToggle = document.getElementById('avrae-use-advanced-toggle');
 
   function q(id) {
     return document.getElementById(id);
@@ -57,8 +59,20 @@
     if (noSelf) parts.push('noself');
   }
 
+  function updateTargetDisableState() {
+    var disabled = q('avrae-use-target-all').checked;
+    targetsWrap.querySelectorAll('input, button').forEach(function (el) {
+      el.disabled = disabled;
+    });
+    addTargetBtn.disabled = disabled;
+  }
+
+  function updateAdvancedState() {
+    root.classList.toggle('show-advanced', !!advancedToggle.checked);
+  }
+
   function collectCheckboxGroup(selector, parts) {
-    root.querySelectorAll(selector + ':checked').forEach(function (el) {
+    outputWrap.querySelectorAll(selector + ':checked').forEach(function (el) {
       var val = clean(el.value);
       if (val) parts.push(val);
     });
@@ -67,10 +81,11 @@
   function build() {
     var parts = ['!use'];
 
-    parts.push(asFlagOrValue('-save', q('avrae-use-save').value));
+    parts.push(asFlagOrValue('-save', q('avrae-use-save').value.toLowerCase()));
     parts.push(asFlagOrValue('-dc', q('avrae-use-dc').value));
 
-    collectCheckboxGroup('input[name="avrae-use-rollmod"]', parts);
+    var rollmod = clean(q('avrae-use-rollmod').value);
+    if (rollmod) parts.push(rollmod);
     if (q('avrae-use-hide').checked) parts.push('-h');
 
     collectTargets(parts);
@@ -122,6 +137,13 @@
   }
 
   addTargetBtn.addEventListener('click', appendTargetRow);
+  q('avrae-use-target-all').addEventListener('change', function () {
+    updateTargetDisableState();
+    build();
+  });
+  if (advancedToggle) {
+    advancedToggle.addEventListener('change', updateAdvancedState);
+  }
 
   targetsWrap.addEventListener('click', function (ev) {
     var btn = ev.target.closest('.avrae-use-target-remove');
@@ -141,5 +163,7 @@
   form.addEventListener('change', build);
 
   appendTargetRow();
+  updateTargetDisableState();
+  updateAdvancedState();
   build();
 })();
