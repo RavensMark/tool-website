@@ -34,6 +34,7 @@
   var itemLootWrapEl = document.getElementById("out-itemloot-wrap");
   var lootNoteEl = document.getElementById("out-loot-note");
   var questTuningEl = document.getElementById("quest-tuning");
+  var questTuningPreciseEl = document.getElementById("quest-tuning-precise");
   var lastCalcState = null;
 
   var EFFORT_LEVELS = [
@@ -212,16 +213,32 @@
     return form.querySelector('input[name="questType"]:checked');
   }
 
-  function getSelectedEffortIndex() {
-    var val = Number(questTuningEl && questTuningEl.value);
-    if (!Number.isFinite(val)) return 1;
-    return Math.min(Math.max(Math.floor(val), 0), EFFORT_LEVELS.length - 1);
+  function getEffortState() {
+    var raw = Number(questTuningEl && questTuningEl.value);
+    if (!Number.isFinite(raw)) raw = 1;
+    var clamped = Math.min(Math.max(raw, 0), EFFORT_LEVELS.length - 1);
+    var preciseEnabled = !!(questTuningPreciseEl && questTuningPreciseEl.checked);
+    if (!preciseEnabled) {
+      var effortIdx = Math.min(Math.max(Math.floor(clamped), 0), EFFORT_LEVELS.length - 1);
+      return { label: EFFORT_LEVELS[effortIdx].label, mod: EFFORT_LEVELS[effortIdx].mod };
+    }
+
+    var lowIdx = Math.floor(clamped);
+    var highIdx = Math.min(lowIdx + 1, EFFORT_LEVELS.length - 1);
+    var ratio = clamped - lowIdx;
+    var low = EFFORT_LEVELS[lowIdx];
+    var high = EFFORT_LEVELS[highIdx];
+    var blended = low.mod + (high.mod - low.mod) * ratio;
+    var label = lowIdx === highIdx
+      ? low.label + ' (Precise Tweaking)'
+      : low.label + ' → ' + high.label + ' (' + Math.round(ratio * 100) + '%)';
+
+    return { label: label, mod: blended };
   }
 
   function renderLootForState(state) {
     if (!state) return;
-    var effortIdx = getSelectedEffortIndex();
-    var effort = EFFORT_LEVELS[effortIdx];
+    var effort = getEffortState();
     var questType = QUEST_TYPES[state.questTypeValue];
     var gpByPlayer = state.partyLevels.map(function (x) {
       return Math.floor((state.playerXp / HalfProf[x]) * effort.mod * GPMod[x]);
@@ -293,6 +310,16 @@
 
   if (questTuningEl) {
     questTuningEl.addEventListener("input", function () {
+      renderLootForState(lastCalcState);
+    });
+  }
+
+  if (questTuningPreciseEl && questTuningEl) {
+    questTuningPreciseEl.addEventListener("change", function () {
+      questTuningEl.step = questTuningPreciseEl.checked ? "0.01" : "1";
+      if (!questTuningPreciseEl.checked) {
+        questTuningEl.value = String(Math.round(Number(questTuningEl.value) || 1));
+      }
       renderLootForState(lastCalcState);
     });
   }

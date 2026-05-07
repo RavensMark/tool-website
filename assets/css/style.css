@@ -436,6 +436,19 @@ body.tab-wide main {
   color: var(--parchment-muted);
 }
 
+
+.boopsum-precise-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.9rem;
+  color: var(--parchment);
+}
+
+.boopsum-precise-toggle input[type="checkbox"] {
+  accent-color: var(--gold);
+}
+
 .field select {
   appearance: none;
   -webkit-appearance: none;
