@@ -17,7 +17,26 @@
     links: document.getElementById('panel-links'),
   };
 
-  function activate(name) {
+  function isKnownPanel(name) {
+    return Object.prototype.hasOwnProperty.call(panels, name);
+  }
+
+  function readTabFromHash() {
+    var hash = window.location.hash || '';
+    var name = hash.replace(/^#/, '').trim().toLowerCase();
+    return isKnownPanel(name) ? name : null;
+  }
+
+  function syncHash(name) {
+    var targetHash = '#' + name;
+    if (window.location.hash !== targetHash) {
+      window.location.hash = targetHash;
+    }
+  }
+
+  function activate(name, options) {
+    options = options || {};
+    if (!isKnownPanel(name)) name = 'home';
     if (document.body.classList.contains('mode-player') && dmOnlyPanels.indexOf(name) !== -1) {
       name = 'home';
     }
@@ -35,6 +54,9 @@
       panel.classList.toggle('is-active', on);
       panel.hidden = !on;
     });
+    if (!options.fromHash) {
+      syncHash(name);
+    }
     window.dispatchEvent(new CustomEvent('rmtools-tab', { detail: { tab: name } }));
   }
 
@@ -81,6 +103,11 @@
     });
   }
 
+  window.addEventListener('hashchange', function () {
+    var tabFromHash = readTabFromHash() || 'home';
+    activate(tabFromHash, { fromHash: true });
+  });
+
   applyMode(readSavedMode());
-  activate('home');
+  activate(readTabFromHash() || 'home', { fromHash: true });
 })();
