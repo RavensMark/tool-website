@@ -1391,6 +1391,43 @@ small {
   background: rgba(8, 7, 11, 0.92);
 }
 
+.avrae-use-card {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.avrae-use-form {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.avrae-use-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+  gap: 0.65rem;
+}
+
+.avrae-use-check-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+}
+
+.avrae-use-targets {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.avrae-use-target-row {
+  display: grid;
+  grid-template-columns: minmax(10rem, 1fr) minmax(12rem, 1fr) auto;
+  gap: 0.55rem;
+}
+
+.avrae-use-output-wrap {
+  margin-top: 0.3rem;
+}
+
 .questnotes-warning {
   margin: 0 0 1rem;
 }

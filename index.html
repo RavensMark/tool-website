@@ -466,6 +466,7 @@
         </header>
         <nav class="avrae-subtabs" role="tablist" aria-label="Avrae tools">
           <button type="button" class="avrae-subtab is-active" id="tab-avrae-general" role="tab" aria-selected="true" aria-controls="panel-avrae-general" data-avrae-subtab="general">General Use</button>
+          <button type="button" class="avrae-subtab" id="tab-avrae-use" role="tab" aria-selected="false" aria-controls="panel-avrae-use" data-avrae-subtab="use">!use Builder</button>
           <button type="button" class="avrae-subtab" id="tab-avrae-combat" role="tab" aria-selected="false" aria-controls="panel-avrae-combat" data-avrae-subtab="combat">Combat Planning</button>
         </nav>
         <div class="card avrae-frame-card is-active" id="panel-avrae-general" role="tabpanel" aria-labelledby="tab-avrae-general" data-avrae-pane="general">
@@ -487,6 +488,15 @@
             loading="lazy"
             referrerpolicy="strict-origin-when-cross-origin"
           ></iframe>
+        </div>
+        <div class="card avrae-use-card" id="panel-avrae-use" role="tabpanel" aria-labelledby="tab-avrae-use" data-avrae-pane="use" hidden>
+          <p class="hint">Build <code>!use</code> commands for saves, damage, effects, consumables, and flavor in one place.</p>
+          <form id="avrae-use-form" class="avrae-use-form"><div class="avrae-use-grid"><label class="field"><span>Save stat</span><select id="avrae-use-save"><option>dex</option><option>str</option><option>con</option><option>wis</option><option>cha</option><option>int</option></select></label><label class="field"><span>DC</span><input type="text" id="avrae-use-dc" value="10" /></label><label class="field"><span>Bonus (-b)</span><input type="text" id="avrae-use-bonus" placeholder="1d4 or -2" /></label></div>
+            <div class="avrae-use-check-row"><label><input type="checkbox" id="avrae-use-hide" /> -h</label><label><input type="checkbox" name="avrae-use-rollmod" value="adv" /> adv</label><label><input type="checkbox" name="avrae-use-rollmod" value="dis" /> dis</label><label><input type="checkbox" id="avrae-use-target-all" /> all</label><label><input type="checkbox" id="avrae-use-target-noself" /> noself</label><label><input type="checkbox" name="avrae-use-dmgmods" value="crit" /> crit</label><label><input type="checkbox" name="avrae-use-dmgmods" value="half" /> half</label><label><input type="checkbox" name="avrae-use-dmgmods" value="avoid" /> avoid</label><label><input type="checkbox" id="avrae-use-i" /> -i</label></div>
+            <div id="avrae-use-targets" class="avrae-use-targets"></div><button type="button" class="btn ghost" id="avrae-use-add-target">Add target</button>
+            <div class="avrae-use-grid"><label class="field"><span>Damage (-d)</span><input type="text" id="avrae-use-damage" placeholder="8d6[fire]" /></label><label class="field"><span>Min</span><input type="text" id="avrae-use-dmg-min" /></label><label class="field"><span>Max</span><input type="text" id="avrae-use-dmg-max" /></label><label class="field"><span>-effect</span><input type="text" id="avrae-use-effect" placeholder="Burning|ac -2|2" /></label><label class="field"><span>-effectdesc</span><input type="text" id="avrae-use-effectdesc" /></label><label class="field"><span>-seffect</span><input type="text" id="avrae-use-seffect" /></label><label class="field"><span>-seffectdesc</span><input type="text" id="avrae-use-seffectdesc" /></label><label class="field"><span>-user</span><input type="text" id="avrae-use-user" /></label><label class="field"><span>-cc</span><input type="text" id="avrae-use-cc" /></label><label class="field"><span>-ccnum</span><input type="text" id="avrae-use-ccnum" /></label><label class="field"><span>-slot</span><input type="text" id="avrae-use-slot" /></label><label class="field"><span>-slotnum</span><input type="text" id="avrae-use-slotnum" /></label><label class="field"><span>-item</span><input type="text" id="avrae-use-item" placeholder="Backpack|Arrow" /></label><label class="field"><span>-itemqty</span><input type="text" id="avrae-use-itemqty" /></label><label class="field"><span>-title</span><input type="text" id="avrae-use-title" /></label><label class="field"><span>-phrase</span><input type="text" id="avrae-use-phrase" /></label><label class="field"><span>-desc</span><input type="text" id="avrae-use-desc" /></label><label class="field"><span>-thumb</span><input type="url" id="avrae-use-thumb" /></label><label class="field"><span>-image</span><input type="url" id="avrae-use-image" /></label><label class="field"><span>-color</span><input type="text" id="avrae-use-color" /></label><label class="field"><span>-roll</span><input type="text" id="avrae-use-roll" /></label><label class="field"><span>-n</span><input type="text" id="avrae-use-n" /></label><label class="field"><span>-ndesc</span><input type="text" id="avrae-use-ndesc" /></label><label class="field"><span>-cvar</span><input type="text" id="avrae-use-cvar" /></label><label class="field"><span>-out</span><input type="text" id="avrae-use-out" /></label></div>
+          </form>
+          <div class="copyable-output avrae-use-output-wrap" data-copy-target="#avrae-use-output" id="avrae-use-builder"><textarea id="avrae-use-output" class="questinfo-md-output mono-output" rows="6" readonly spellcheck="false"></textarea><button type="button" class="btn ghost copyable-output-btn" aria-label="Copy use command">Copy</button></div>
         </div>
       </div>
     </section>
@@ -643,6 +653,7 @@
   <script src="assets/js/loot.js"></script>
   <script src="assets/js/character.js"></script>
   <script src="assets/js/avrae.js"></script>
+  <script src="assets/js/avrae-use-builder.js"></script>
   <script src="assets/js/copyable.js"></script>
 </body>
 </html>
