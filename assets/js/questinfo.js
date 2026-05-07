@@ -84,6 +84,7 @@
     warnings: [],
     selectedCw: {},
     cwFilter: "",
+    collapsedCwGroups: {},
   };
 
   TYPES.forEach(function (t) {
@@ -101,6 +102,30 @@
       .replace(/`/g, "\\`");
   }
 
+  function parseCsvLine(line) {
+    var out = [];
+    var cur = "";
+    var inQuotes = false;
+    for (var i = 0; i < line.length; i++) {
+      var ch = line.charAt(i);
+      if (ch === '"') {
+        if (inQuotes && line.charAt(i + 1) === '"') {
+          cur += '"';
+          i++;
+        } else {
+          inQuotes = !inQuotes;
+        }
+      } else if (ch === "," && !inQuotes) {
+        out.push(cur.trim());
+        cur = "";
+      } else {
+        cur += ch;
+      }
+    }
+    out.push(cur.trim());
+    return out;
+  }
+
   function parseWarningCsv(text) {
     var lines = String(text).split(/\r?\n/);
     var out = [];
@@ -109,11 +134,13 @@
       if (!raw) continue;
       var line = raw.trim();
       if (!line) continue;
-      if (i === 0 && /^label$/i.test(line)) continue;
-      if (line.charAt(0) === '"' && line.charAt(line.length - 1) === '"') {
-        line = line.slice(1, -1).replace(/""/g, '"');
-      }
-      if (line) out.push(line);
+      var cols = parseCsvLine(line);
+      if (i === 0 && /^label$/i.test(cols[0])) continue;
+      if (i === 0 && /^category$/i.test(cols[0]) && /^label$/i.test(cols[1] || "")) continue;
+      var category = cols.length > 1 ? cols[0] || "General Distress & Other" : "General Distress & Other";
+      var label = cols.length > 1 ? cols[1] : cols[0];
+      if (!label) continue;
+      out.push({ category: category, label: label });
     }
     return out;
   }
@@ -194,9 +221,13 @@
   }
 
   function selectedWarningsSorted() {
-    return state.warnings.filter(function (w) {
-      return state.selectedCw[w];
-    });
+    return state.warnings
+      .filter(function (w) {
+        return state.selectedCw[w.label];
+      })
+      .map(function (w) {
+        return w.label;
+      });
   }
 
   function renderMarkdown() {
@@ -226,10 +257,13 @@
     mdOutEl.value = lines.join("\n");
   }
 
-  function cwMatchesFilter(label) {
+  function cwMatchesFilter(warning) {
     var q = state.cwFilter.trim().toLowerCase();
     if (!q) return true;
-    return label.toLowerCase().indexOf(q) !== -1;
+    return (
+      warning.label.toLowerCase().indexOf(q) !== -1 ||
+      warning.category.toLowerCase().indexOf(q) !== -1
+    );
   }
 
   function renderCwList() {
@@ -237,26 +271,49 @@
     cwListEl.textContent = "";
     var frag = document.createDocumentFragment();
     var visible = 0;
-    state.warnings.forEach(function (label) {
-      if (!cwMatchesFilter(label)) return;
+    var grouped = {};
+
+    state.warnings.forEach(function (warning) {
+      if (!cwMatchesFilter(warning)) return;
       visible++;
-      var wrap = document.createElement("label");
-      wrap.className = "questinfo-cw-item";
-      var input = document.createElement("input");
-      input.type = "checkbox";
-      input.checked = !!state.selectedCw[label];
-      input.addEventListener("change", function () {
-        if (input.checked) state.selectedCw[label] = true;
-        else delete state.selectedCw[label];
-        renderMarkdown();
-      });
-      var span = document.createElement("span");
-      span.className = "questinfo-cw-text";
-      span.textContent = label;
-      wrap.appendChild(input);
-      wrap.appendChild(span);
-      frag.appendChild(wrap);
+      if (!grouped[warning.category]) grouped[warning.category] = [];
+      grouped[warning.category].push(warning);
     });
+
+    Object.keys(grouped).forEach(function (category) {
+      var details = document.createElement("details");
+      details.className = "questinfo-cw-group";
+      details.open = !state.collapsedCwGroups[category];
+      details.addEventListener("toggle", function () {
+        state.collapsedCwGroups[category] = !details.open;
+      });
+
+      var summary = document.createElement("summary");
+      summary.className = "questinfo-cw-group-title";
+      summary.textContent = category + " (" + grouped[category].length + ")";
+      details.appendChild(summary);
+
+      grouped[category].forEach(function (warning) {
+        var wrap = document.createElement("label");
+        wrap.className = "questinfo-cw-item";
+        var input = document.createElement("input");
+        input.type = "checkbox";
+        input.checked = !!state.selectedCw[warning.label];
+        input.addEventListener("change", function () {
+          if (input.checked) state.selectedCw[warning.label] = true;
+          else delete state.selectedCw[warning.label];
+          renderMarkdown();
+        });
+        var span = document.createElement("span");
+        span.className = "questinfo-cw-text";
+        span.textContent = warning.label;
+        wrap.appendChild(input);
+        wrap.appendChild(span);
+        details.appendChild(wrap);
+      });
+      frag.appendChild(details);
+    });
+
     cwListEl.appendChild(frag);
     if (cwStatusEl && state.warnings.length) {
       cwStatusEl.textContent =
@@ -317,8 +374,8 @@
 
   if (cwSelectVisibleBtn) {
     cwSelectVisibleBtn.addEventListener("click", function () {
-      state.warnings.forEach(function (label) {
-        if (cwMatchesFilter(label)) state.selectedCw[label] = true;
+      state.warnings.forEach(function (warning) {
+        if (cwMatchesFilter(warning)) state.selectedCw[warning.label] = true;
       });
       renderCwList();
       renderMarkdown();
