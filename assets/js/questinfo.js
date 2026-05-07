@@ -43,6 +43,7 @@
     { id: "rp", label: "RP" },
     { id: "combat", label: "Combat" },
     { id: "puzzle", label: "Puzzle" },
+    { id: "exploration", label: "Exploration" },
   ];
 
   var LENGTHS = [
