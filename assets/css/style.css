@@ -1391,6 +1391,69 @@ small {
   background: rgba(8, 7, 11, 0.92);
 }
 
+.avrae-use-card {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.avrae-use-form {
+  display: grid;
+  gap: 1rem;
+}
+
+.avrae-use-group {
+  border: 1px solid rgba(201, 162, 39, 0.26);
+  border-radius: 0.8rem;
+  padding: 0.9rem;
+  background: linear-gradient(180deg, rgba(25, 19, 32, 0.92), rgba(16, 12, 23, 0.96));
+}
+
+.avrae-use-group legend {
+  padding: 0 0.45rem;
+  font-family: "Cinzel", serif;
+  color: var(--gold);
+  letter-spacing: 0.03em;
+}
+
+.avrae-use-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+  gap: 0.65rem;
+}
+
+.avrae-use-check-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+}
+
+.avrae-use-form .field > span[title]::after,
+.avrae-use-check-row label[title]::after {
+  content: " ⓘ";
+  color: var(--gold-dim);
+  font-size: 0.82em;
+  font-weight: 700;
+}
+
+.avrae-use-targets {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.avrae-use-target-row {
+  display: grid;
+  grid-template-columns: minmax(10rem, 1fr) minmax(12rem, 1fr) auto;
+  gap: 0.55rem;
+}
+
+.avrae-use-target-row input {
+  min-width: 0;
+}
+
+.avrae-use-output-wrap {
+  margin-top: 0.3rem;
+}
+
 .questnotes-warning {
   margin: 0 0 1rem;
 }

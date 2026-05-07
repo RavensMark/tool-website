@@ -466,6 +466,7 @@
         </header>
         <nav class="avrae-subtabs" role="tablist" aria-label="Avrae tools">
           <button type="button" class="avrae-subtab is-active" id="tab-avrae-general" role="tab" aria-selected="true" aria-controls="panel-avrae-general" data-avrae-subtab="general">General Use</button>
+          <button type="button" class="avrae-subtab" id="tab-avrae-use" role="tab" aria-selected="false" aria-controls="panel-avrae-use" data-avrae-subtab="use">!use Builder</button>
           <button type="button" class="avrae-subtab" id="tab-avrae-combat" role="tab" aria-selected="false" aria-controls="panel-avrae-combat" data-avrae-subtab="combat">Combat Planning</button>
         </nav>
         <div class="card avrae-frame-card is-active" id="panel-avrae-general" role="tabpanel" aria-labelledby="tab-avrae-general" data-avrae-pane="general">
@@ -487,6 +488,87 @@
             loading="lazy"
             referrerpolicy="strict-origin-when-cross-origin"
           ></iframe>
+        </div>
+        <div class="card avrae-use-card" id="panel-avrae-use" role="tabpanel" aria-labelledby="tab-avrae-use" data-avrae-pane="use" hidden>
+          <p class="hint">Build <code>!use</code> commands visually. Hover labels for quick help.</p>
+          <form id="avrae-use-form" class="avrae-use-form">
+            <fieldset class="avrae-use-group">
+              <legend>Save Setup</legend>
+              <div class="avrae-use-grid">
+                <label class="field"><span title="Which save the target rolls.">Save stat</span><select id="avrae-use-save"><option>dex</option><option>str</option><option>con</option><option>wis</option><option>cha</option><option>int</option></select></label>
+                <label class="field"><span title="Save difficulty class.">DC</span><input type="number" id="avrae-use-dc" value="10" step="1" /></label>
+                <label class="field"><span title="Adds to the save roll. Dice expressions allowed.">Bonus (-b)</span><input type="text" id="avrae-use-bonus" placeholder="1d4 or -2" /></label>
+              </div>
+              <div class="avrae-use-check-row">
+                <label title="Hide DC and damage."><input type="checkbox" id="avrae-use-hide" /> -h</label>
+                <label title="Roll with advantage."><input type="checkbox" name="avrae-use-rollmod" value="adv" /> adv</label>
+                <label title="Roll with disadvantage."><input type="checkbox" name="avrae-use-rollmod" value="dis" /> dis</label>
+              </div>
+            </fieldset>
+
+            <fieldset class="avrae-use-group">
+              <legend>Targets</legend>
+              <div class="avrae-use-check-row">
+                <label title="Targets every combatant."><input type="checkbox" id="avrae-use-target-all" /> all</label>
+                <label title="Do not auto-target your active character."><input type="checkbox" id="avrae-use-target-noself" /> noself</label>
+              </div>
+              <div id="avrae-use-targets" class="avrae-use-targets"></div>
+              <button type="button" class="btn ghost" id="avrae-use-add-target">+ Add target</button>
+            </fieldset>
+
+            <fieldset class="avrae-use-group">
+              <legend>Damage & Effects</legend>
+              <div class="avrae-use-grid">
+                <label class="field"><span title="Damage on failed save.">Damage (-d)</span><input type="text" id="avrae-use-damage" placeholder="8d6[fire]" /></label>
+                <label class="field"><span title="Minimum damage when using -d "damage|min|max".">Min</span><input type="number" id="avrae-use-dmg-min" step="1" /></label>
+                <label class="field"><span title="Maximum damage when using -d "damage|min|max".">Max</span><input type="number" id="avrae-use-dmg-max" step="1" /></label>
+                <label class="field"><span title="Format: name|effects|duration.">-effect</span><input type="text" id="avrae-use-effect" placeholder="Burning|ac -2|2" /></label>
+                <label class="field"><span title="Description for target effect.">-effectdesc</span><input type="text" id="avrae-use-effectdesc" /></label>
+                <label class="field"><span title="Format: name|effects|duration for the user.">-seffect</span><input type="text" id="avrae-use-seffect" /></label>
+                <label class="field"><span title="Description for self effect.">-seffectdesc</span><input type="text" id="avrae-use-seffectdesc" /></label>
+                <label class="field"><span title="Overrides the user name for -seffect.">-user</span><input type="text" id="avrae-use-user" /></label>
+              </div>
+              <div class="avrae-use-check-row">
+                <label title="Double dice in -d."><input type="checkbox" name="avrae-use-dmgmods" value="crit" /> crit</label>
+                <label title="Halve damage on success."><input type="checkbox" name="avrae-use-dmgmods" value="half" /> half</label>
+                <label title="Half on fail, 0 on success."><input type="checkbox" name="avrae-use-dmgmods" value="avoid" /> avoid</label>
+              </div>
+            </fieldset>
+
+            <fieldset class="avrae-use-group">
+              <legend>Consumables</legend>
+              <div class="avrae-use-grid">
+                <label class="field"><span title="Counter name to consume.">-cc</span><input type="text" id="avrae-use-cc" /></label>
+                <label class="field"><span title="How many uses -cc changes.">-ccnum</span><input type="number" id="avrae-use-ccnum" step="1" /></label>
+                <label class="field"><span title="Spell slot level.">-slot</span><input type="number" id="avrae-use-slot" min="1" max="9" step="1" /></label>
+                <label class="field"><span title="How many slots -slot changes.">-slotnum</span><input type="number" id="avrae-use-slotnum" step="1" /></label>
+                <label class="field"><span title="Format: container|item.">-item</span><input type="text" id="avrae-use-item" placeholder="Backpack|Arrow" /></label>
+                <label class="field"><span title="How many items to remove/add.">-itemqty</span><input type="number" id="avrae-use-itemqty" step="1" /></label>
+              </div>
+              <div class="avrae-use-check-row"><label title="Set cc/slot/item amounts to 0."><input type="checkbox" id="avrae-use-i" /> -i</label></div>
+            </fieldset>
+
+            <fieldset class="avrae-use-group">
+              <legend>Flavor & Meta</legend>
+              <div class="avrae-use-grid">
+                <label class="field"><span title="Embed title. [name] and [sname] are replaced.">-title</span><input type="text" id="avrae-use-title" /></label>
+                <label class="field"><span title="Flavor text in output.">-phrase</span><input type="text" id="avrae-use-phrase" /></label>
+                <label class="field"><span title="Description/rules text field.">-desc</span><input type="text" id="avrae-use-desc" /></label>
+                <label class="field"><span title="Thumbnail image URL.">-thumb</span><input type="url" id="avrae-use-thumb" /></label>
+                <label class="field"><span title="Full-size image URL.">-image</span><input type="url" id="avrae-use-image" /></label>
+                <label class="field"><span title="Embed side color hex.">-color</span><input type="text" id="avrae-use-color" placeholder="ffd166" /></label>
+                <label class="field"><span title="Extra display roll.">-roll</span><input type="text" id="avrae-use-roll" /></label>
+                <label class="field"><span title="Number value callable with {n}.">-n</span><input type="number" id="avrae-use-n" step="1" /></label>
+                <label class="field"><span title="Label shown for -n.">-ndesc</span><input type="text" id="avrae-use-ndesc" /></label>
+                <label class="field"><span title="Load args from cvar/uvar.">-cvar</span><input type="text" id="avrae-use-cvar" /></label>
+                <label class="field"><span title="Output codeblock for cvar creation.">-out</span><input type="text" id="avrae-use-out" /></label>
+              </div>
+            </fieldset>
+          </form>
+          <div class="copyable-output avrae-use-output-wrap" data-copy-target="#avrae-use-output" id="avrae-use-builder">
+            <textarea id="avrae-use-output" class="questinfo-md-output mono-output" rows="6" readonly spellcheck="false"></textarea>
+            <button type="button" class="btn ghost copyable-output-btn" aria-label="Copy use command">Copy</button>
+          </div>
         </div>
       </div>
     </section>
@@ -643,6 +725,7 @@
   <script src="assets/js/loot.js"></script>
   <script src="assets/js/character.js"></script>
   <script src="assets/js/avrae.js"></script>
+  <script src="assets/js/avrae-use-builder.js"></script>
   <script src="assets/js/copyable.js"></script>
 </body>
 </html>
