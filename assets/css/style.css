@@ -1396,6 +1396,11 @@ small {
   gap: 0.9rem;
 }
 
+.avrae-frame-card[hidden],
+.avrae-use-card[hidden] {
+  display: none !important;
+}
+
 .avrae-use-form {
   display: grid;
   gap: 1rem;
