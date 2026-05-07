@@ -436,6 +436,19 @@ body.tab-wide main {
   color: var(--parchment-muted);
 }
 
+
+.boopsum-precise-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.9rem;
+  color: var(--parchment);
+}
+
+.boopsum-precise-toggle input[type="checkbox"] {
+  accent-color: var(--gold);
+}
+
 .field select {
   appearance: none;
   -webkit-appearance: none;
@@ -887,6 +900,20 @@ small {
   display: flex;
   flex-direction: column;
   gap: 0.35rem;
+}
+
+.questinfo-cw-group {
+  border: 1px solid rgba(201, 162, 39, 0.2);
+  border-radius: 8px;
+  padding: 0.25rem 0.5rem 0.4rem;
+  background: rgba(15, 12, 20, 0.45);
+}
+
+.questinfo-cw-group-title {
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--gold);
+  margin: 0.15rem 0 0.35rem;
 }
 
 .questinfo-cw-item {
