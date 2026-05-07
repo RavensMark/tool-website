@@ -504,13 +504,13 @@
                 <label class="field"><span title="Set advantage or disadvantage on the save roll.">Advantage/Disadvantage</span><select id="avrae-use-rollmod"><option value="">None</option><option value="adv">Advantage</option><option value="dis">Disadvantage</option></select></label>
               </div>
               <div class="avrae-use-check-row">
-                <label title="Hide DC and damage."><input type="checkbox" id="avrae-use-hide" /> Hide DC and Damage</label>
+                <label class="avrae-use-advanced-only" title="Hide DC and damage."><input type="checkbox" id="avrae-use-hide" /> Hide DC and Damage</label>
               </div>
             </fieldset>
 
             <fieldset class="avrae-use-group">
               <legend>Targets</legend>
-              <div class="avrae-use-check-row">
+              <div class="avrae-use-check-row avrae-use-advanced-only">
                 <label title="Targets every combatant."><input type="checkbox" id="avrae-use-target-all" /> All</label>
                 <label title="Do not auto-target your active character."><input type="checkbox" id="avrae-use-target-noself" /> Do not target myself</label>
               </div>
@@ -552,10 +552,10 @@
               <fieldset class="avrae-use-subgroup">
                 <legend>Counters</legend>
                 <div class="avrae-use-grid">
-                  <label class="field"><span title="Counter name to consume.">CC</span><input type="text" id="avrae-use-cc" /></label>
-                  <label class="field"><span title="How many uses -cc changes.">CCNUM</span><input type="number" id="avrae-use-ccnum" step="1" /></label>
-                  <label class="field"><span title="Spell slot level.">SLOT</span><input type="number" id="avrae-use-slot" min="1" max="9" step="1" /></label>
-                  <label class="field"><span title="How many slots -slot changes.">SLOTNUM</span><input type="number" id="avrae-use-slotnum" step="1" /></label>
+                  <label class="field"><span title="Counter name to consume.">Consumable Counter (CC)</span><input type="text" id="avrae-use-cc" /></label>
+                  <label class="field"><span title="How many uses -cc changes.">Decrease CC by (default 1)</span><input type="number" id="avrae-use-ccnum" step="1" /></label>
+                  <label class="field"><span title="Spell slot level.">Spell Slot Level</span><input type="number" id="avrae-use-slot" min="1" max="9" step="1" /></label>
+                  <label class="field"><span title="How many slots -slot changes.">Decrease SLOT by (default 1)</span><input type="number" id="avrae-use-slotnum" step="1" /></label>
                 </div>
               </fieldset>
               <fieldset class="avrae-use-subgroup avrae-use-advanced-only">
@@ -572,7 +572,7 @@
               <legend>Flavor & Meta</legend>
               <div class="avrae-use-grid">
                 <label class="field"><span title="Embed title. [name] and [sname] are replaced.">Title</span><input type="text" id="avrae-use-title" /></label>
-                <label class="field"><span title="Flavor text in output.">Phrase</span><input type="text" id="avrae-use-phrase" /></label>
+                <label class="field"><span title="Flavor text in output.">Flavor Phrase</span><input type="text" id="avrae-use-phrase" /></label>
                 <label class="field"><span title="Description/rules text field.">Description</span><input type="text" id="avrae-use-desc" /></label>
                 <label class="field avrae-use-advanced-only"><span title="Thumbnail image URL.">Thumb</span><input type="url" id="avrae-use-thumb" /></label>
                 <label class="field avrae-use-advanced-only"><span title="Full-size image URL.">Image</span><input type="url" id="avrae-use-image" /></label>
