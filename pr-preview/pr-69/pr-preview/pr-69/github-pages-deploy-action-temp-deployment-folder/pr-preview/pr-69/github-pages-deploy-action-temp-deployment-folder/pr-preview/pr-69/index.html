@@ -735,6 +735,7 @@
           <div class="actions">
             <button type="button" class="btn primary" id="load-open5e">Load Open5e Data</button>
             <p id="encounter-status" class="hint">Idle.</p>
+            <p id="encounter-last-synced" class="hint">Last synced: never</p>
           </div>
           <div class="encounter-import">
             <input type="url" id="critterdb-url" placeholder="https://critterdb.com/#/bestiary/view/XXXX" />
@@ -754,6 +755,30 @@
               <thead><tr><th>Name</th><th>CR</th><th>Type</th><th>Alignment</th><th>Source</th></tr></thead>
               <tbody id="encounter-monsters-body"></tbody>
             </table>
+          </div>
+
+          <div class="card encounter-builder-card">
+            <h3>Encounter Builder</h3>
+            <div class="encounter-party-head">
+              <button type="button" class="btn ghost" id="encounter-add-character">Add Character</button>
+              <select id="encounter-difficulty">
+                <option value="low">Low</option>
+                <option value="moderate" selected>Moderate</option>
+                <option value="hard">Hard</option>
+              </select>
+            </div>
+            <div id="encounter-party-rows" class="encounter-party-rows"></div>
+            <div class="actions">
+              <p id="encounter-budget" class="hint">0 XP target</p>
+              <button type="button" class="btn primary" id="encounter-generate">Generate</button>
+            </div>
+            <p id="encounter-generated-total" class="hint">Generated 0 monsters • 0 / 0 XP</p>
+            <div class="table-scroll">
+              <table class="encounter-table">
+                <thead><tr><th>Name</th><th>CR</th><th>Type</th><th>Alignment</th><th>Source</th></tr></thead>
+                <tbody id="encounter-generated-body"></tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>

@@ -12,12 +12,16 @@ export async function fetchAllOpen5eMonsters(onProgress) {
     const payload = await response.json();
     const results = payload.results || [];
     for (const item of results) {
+      const crValue = item.cr ?? item.challenge_rating ?? item.challengeRating ?? null;
+      const typeValue = item.type ?? item.creature_type ?? item.creatureType ?? null;
+      const alignmentValue = item.alignment ?? item.alignments ?? null;
+      const sourceValue = item.document__slug || item.document__title || item.document || null;
       all.push(normalizeMonster({
         name: item.name,
-        cr: item.cr,
-        type: item.type,
-        alignment: item.alignment,
-        source: item.document__slug || item.document__title || null,
+        cr: crValue,
+        type: typeValue,
+        alignment: alignmentValue,
+        source: sourceValue,
       }, 'open5e'));
     }
     next = payload.next;

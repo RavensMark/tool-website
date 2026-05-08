@@ -1,6 +1,6 @@
 import { fetchAllOpen5eMonsters } from './api/open5e.js';
 import { importCritterDbMonsters } from './api/critterdb.js';
-import { getAllMonsters, upsertMonsters } from './db/indexeddb.js';
+import { getAllMonsters, upsertMonsters, replaceOriginMonsters } from './db/indexeddb.js';
 import { buildFilters, applyFilters } from './ui/filters.js';
 import { renderMonsterTable } from './ui/table.js';
 import { setMessage } from './ui/importPanel.js';
@@ -182,7 +182,7 @@ async function backgroundSyncOpen5e(force) {
   if (!force) els.status.textContent = `Background sync started...`;
   try {
     const monsters = await fetchAllOpen5eMonsters((msg) => { els.status.textContent = msg; });
-    await upsertMonsters(monsters);
+    await replaceOriginMonsters('open5e', monsters);
     setOpen5eSyncMeta(monsters.length);
     state.monsters = await getAllMonsters();
     repaint();

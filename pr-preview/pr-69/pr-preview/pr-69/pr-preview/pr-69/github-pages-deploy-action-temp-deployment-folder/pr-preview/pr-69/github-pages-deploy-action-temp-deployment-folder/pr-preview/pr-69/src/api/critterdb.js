@@ -31,10 +31,24 @@ function findMonstersInState(state) {
   return [];
 }
 
+function toReadableMirror(url) {
+  return `https://r.jina.ai/http://${url.replace(/^https?:\/\//, '')}`;
+}
+
+async function fetchCritterDbHtml(url) {
+  try {
+    const direct = await fetch(url);
+    if (direct.ok) return await direct.text();
+  } catch {}
+
+  const mirrorUrl = toReadableMirror(url);
+  const mirror = await fetch(mirrorUrl);
+  if (!mirror.ok) throw new Error(`Could not load CritterDB page (${mirror.status}).`);
+  return await mirror.text();
+}
+
 export async function importCritterDbMonsters(url) {
-  const response = await fetch(url);
-  if (!response.ok) throw new Error(`Could not load CritterDB URL (${response.status}).`);
-  const html = await response.text();
+  const html = await fetchCritterDbHtml(url);
   const state = extractEmbeddedJson(html);
   if (!state) throw new Error('No importable CritterDB data found in page source.');
   const monsters = findMonstersInState(state);

@@ -39,3 +39,19 @@ export async function upsertMonsters(monsters) {
     tx.onerror = () => reject(tx.error);
   });
 }
+
+export async function replaceOriginMonsters(origin, monsters) {
+  const db = await openDb();
+  const existing = await getAllMonsters();
+  const preserved = existing.filter((monster) => monster.origin !== origin);
+  const merged = dedupeMonsters([...preserved, ...monsters]);
+
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(STORE, 'readwrite');
+    const store = tx.objectStore(STORE);
+    store.clear();
+    for (const monster of merged) store.put(monster);
+    tx.oncomplete = () => resolve(merged.length);
+    tx.onerror = () => reject(tx.error);
+  });
+}
