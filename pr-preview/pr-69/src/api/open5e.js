@@ -21,6 +21,18 @@ function pickCr(item) {
   return null;
 }
 
+function pickSource(item) {
+  const direct = item.document__slug || item.document__title || item.source || null;
+  if (direct) return direct;
+  const doc = item.document;
+  if (!doc) return null;
+  if (typeof doc === 'string') return doc;
+  if (typeof doc === 'object') {
+    return doc.slug || doc.title || doc.name || null;
+  }
+  return null;
+}
+
 export async function fetchAllOpen5eMonsters(onProgress) {
   const all = [];
   let next = 'https://api.open5e.com/v2/creatures/';
@@ -36,7 +48,7 @@ export async function fetchAllOpen5eMonsters(onProgress) {
       const crValue = pickCr(item);
       const typeValue = item.type ?? item.creature_type ?? item.creatureType ?? null;
       const alignmentValue = item.alignment ?? item.alignments ?? null;
-      const sourceValue = item.document__slug || item.document__title || item.document || null;
+      const sourceValue = pickSource(item);
       all.push(normalizeMonster({
         name: item.name,
         cr: crValue,
