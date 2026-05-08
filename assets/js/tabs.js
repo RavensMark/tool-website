@@ -14,6 +14,7 @@
     questnotes: document.getElementById('panel-questnotes'),
     character: document.getElementById('panel-character'),
     avrae: document.getElementById('panel-avrae'),
+    encounter: document.getElementById('panel-encounter'),
     links: document.getElementById('panel-links'),
   };
 
@@ -40,7 +41,7 @@
     if (document.body.classList.contains('mode-player') && dmOnlyPanels.indexOf(name) !== -1) {
       name = 'home';
     }
-    document.body.classList.toggle('tab-wide', name === 'loot' || name === 'avrae');
+    document.body.classList.toggle('tab-wide', name === 'loot' || name === 'avrae' || name === 'encounter');
     document.body.classList.toggle('is-home', name === 'home');
     tabs.forEach(function (btn) {
       var on = btn.dataset.tab === name;
