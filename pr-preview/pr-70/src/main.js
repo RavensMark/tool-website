@@ -44,7 +44,7 @@ const els = {
   crMax: document.getElementById('filter-cr-max'),
   type: document.getElementById('filter-type'),
   alignment: document.getElementById('filter-alignment'),
-source: document.getElementById('filter-source'),
+  source: document.getElementById('filter-source'),
   sourceSummary: document.getElementById('filter-source-summary'),
   partyRows: document.getElementById('encounter-party-rows'),
   levelButtons: document.getElementById('encounter-level-buttons'),
@@ -185,6 +185,22 @@ function syncOptions(select, values) {
   if (!select) return; const current = select.value; select.innerHTML = '<option value="">Any</option>';
   for (const value of values) { const option = document.createElement('option'); option.value = value; option.textContent = value; select.appendChild(option); }
   select.value = current;
+}
+function syncSourceOptions(values) {
+  if (!els.source) return;
+  const selected = new Set(getSelectedSources());
+  els.source.innerHTML = '';
+  for (const value of values) {
+    const label = document.createElement('label');
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.value = value;
+    checkbox.checked = selected.has(value);
+    checkbox.addEventListener('change', updateFilters);
+    label.append(checkbox, ` ${value}`);
+    els.source.appendChild(label);
+  }
+  updateSourceSummary();
 }
 function shouldAutoSyncOpen5e() {
   const metaRaw = localStorage.getItem(CACHE_META_KEY); if (!metaRaw) return true;
