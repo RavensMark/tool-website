@@ -35,6 +35,30 @@ function toReadableMirror(url) {
   return `https://r.jina.ai/http://${url.replace(/^https?:\/\//, '')}`;
 }
 
+function parseBestiaryId(url) {
+  const match = url.match(/\/view\/([a-f0-9]+)/i);
+  return match ? match[1] : null;
+}
+
+async function fetchCritterDbApiMonsters(url) {
+  const bestiaryId = parseBestiaryId(url);
+  if (!bestiaryId) return [];
+  const endpoints = [
+    `https://critterdb.com/api/publishedbestiaries/${bestiaryId}/creatures`,
+    `https://critterdb.com/api/bestiaries/${bestiaryId}/creatures`,
+  ];
+  for (const endpoint of endpoints) {
+    try {
+      const response = await fetch(endpoint);
+      if (!response.ok) continue;
+      const payload = await response.json();
+      if (Array.isArray(payload) && payload.length) return payload;
+      if (Array.isArray(payload?.creatures) && payload.creatures.length) return payload.creatures;
+    } catch {}
+  }
+  return [];
+}
+
 async function fetchCritterDbHtml(url) {
   try {
     const direct = await fetch(url);
@@ -48,6 +72,19 @@ async function fetchCritterDbHtml(url) {
 }
 
 export async function importCritterDbMonsters(url) {
+  const apiMonsters = await fetchCritterDbApiMonsters(url);
+  if (apiMonsters.length) {
+    return apiMonsters
+      .filter((m) => m && m.name)
+      .map((m) => normalizeMonster({
+        name: m.name,
+        cr: m.challengeRating ?? m.cr,
+        type: m.stats?.race ?? m.type ?? null,
+        alignment: m.alignment ?? null,
+        source: 'CritterDB',
+      }, 'critterdb'));
+  }
+
   const html = await fetchCritterDbHtml(url);
   const state = extractEmbeddedJson(html);
   if (!state) throw new Error('No importable CritterDB data found in page source.');
