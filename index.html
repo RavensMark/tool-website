@@ -39,6 +39,7 @@
       <button type="button" class="tab" role="tab" id="tab-questnotes" aria-selected="false" aria-controls="panel-questnotes" data-tab="questnotes">Quest Notes</button>
       <button type="button" class="tab" role="tab" id="tab-character" aria-selected="false" aria-controls="panel-character" data-tab="character">Character Creation</button>
       <button type="button" class="tab" role="tab" id="tab-avrae" aria-selected="false" aria-controls="panel-avrae" data-tab="avrae">Avrae</button>
+      <button type="button" class="tab" role="tab" id="tab-encounter" aria-selected="false" aria-controls="panel-encounter" data-tab="encounter">Encounter Generator</button>
       <button type="button" class="tab" role="tab" id="tab-links" aria-selected="false" aria-controls="panel-links" data-tab="links">Useful Links</button>
     </nav>
   </header>
@@ -81,6 +82,10 @@
             <button type="button" class="landing-tile" data-open-tab="avrae">
               <h3><span class="landing-tile-icon" aria-hidden="true">🧠</span>Avrae Assistants</h3>
               <p>Visually build avrae commands, combats, etc.</p>
+            </button>
+            <button type="button" class="landing-tile" data-open-tab="encounter">
+              <h3><span class="landing-tile-icon" aria-hidden="true">⚔️</span>Encounter Generator</h3>
+              <p>Build encounters from Open5e and imported CritterDB bestiaries.</p>
             </button>
             <button type="button" class="landing-tile" data-open-tab="links">
               <h3><span class="landing-tile-icon" aria-hidden="true">🗺️</span>Useful Links</h3>
@@ -719,6 +724,65 @@
         </form>
       </dialog>
     </section>
+    
+    <section id="panel-encounter" class="panel" role="tabpanel" aria-labelledby="tab-encounter" hidden>
+      <div class="panel-inner">
+        <header class="panel-head">
+          <h2>Encounter Generator</h2>
+          <p class="lede">Build combats with cached Open5e and CritterDB monsters.</p>
+        </header>
+        <div class="card">
+          <div class="actions">
+            <button type="button" class="btn primary" id="load-open5e">Load Open5e Data</button>
+            <p id="encounter-status" class="hint">Idle.</p>
+            <p id="encounter-last-synced" class="hint">Last synced: never</p>
+          </div>
+          <div class="encounter-import">
+            <input type="url" id="critterdb-url" placeholder="https://critterdb.com/#/bestiary/view/XXXX" />
+            <button type="button" class="btn ghost" id="import-critterdb">Import</button>
+          </div>
+          <p id="critterdb-message" class="alert" hidden></p>
+          <div class="encounter-filters">
+            <input type="search" id="filter-search" placeholder="Search by name" />
+            <input type="number" step="0.25" id="filter-cr-min" placeholder="CR min" />
+            <input type="number" step="0.25" id="filter-cr-max" placeholder="CR max" />
+            <select id="filter-type"><option value="">Any</option></select>
+            <input type="text" id="filter-alignment" placeholder="Alignment contains" />
+            <select id="filter-source"><option value="">Any</option></select>
+          </div>
+          <div class="table-scroll">
+            <table class="encounter-table">
+              <thead><tr><th>Name</th><th>CR</th><th>Type</th><th>Alignment</th><th>Source</th></tr></thead>
+              <tbody id="encounter-monsters-body"></tbody>
+            </table>
+          </div>
+
+          <div class="card encounter-builder-card">
+            <h3>Encounter Builder</h3>
+            <div class="encounter-party-head">
+              <button type="button" class="btn ghost" id="encounter-add-character">Add Character</button>
+              <select id="encounter-difficulty">
+                <option value="low">Low</option>
+                <option value="moderate" selected>Moderate</option>
+                <option value="hard">Hard</option>
+              </select>
+            </div>
+            <div id="encounter-party-rows" class="encounter-party-rows"></div>
+            <div class="actions">
+              <p id="encounter-budget" class="hint">0 XP target</p>
+              <button type="button" class="btn primary" id="encounter-generate">Generate</button>
+            </div>
+            <p id="encounter-generated-total" class="hint">Generated 0 monsters • 0 / 0 XP</p>
+            <div class="table-scroll">
+              <table class="encounter-table">
+                <thead><tr><th>Name</th><th>CR</th><th>Type</th><th>Alignment</th><th>Source</th></tr></thead>
+                <tbody id="encounter-generated-body"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
     <section id="panel-links" class="panel" role="tabpanel" aria-labelledby="tab-links" hidden>
       <div class="panel-inner">
         <header class="panel-head">
@@ -801,5 +865,6 @@
   <script src="assets/js/avrae-use-builder.js"></script>
   <script src="assets/js/avrae-equip-builder.js"></script>
   <script src="assets/js/copyable.js"></script>
+  <script type="module" src="src/main.js"></script>
 </body>
 </html>
