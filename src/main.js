@@ -29,7 +29,7 @@ const XP_BUDGETS_BY_LEVEL = {
   19: { low: 5500, moderate: 10700, hard: 17200 }, 20: { low: 6400, moderate: 13200, hard: 22000 },
 };
 
-const state = { monsters: [], filters: { search: '', crMin: '', crMax: '', type: '', alignment: '', source: '' } };
+const state = { monsters: [], filters: { search: '', crMin: '', crMax: '', type: '', alignment: '', sources: [] } };
 
 const els = {
   tbody: document.getElementById('encounter-monsters-body'),
@@ -44,9 +44,10 @@ const els = {
   crMax: document.getElementById('filter-cr-max'),
   type: document.getElementById('filter-type'),
   alignment: document.getElementById('filter-alignment'),
-  source: document.getElementById('filter-source'),
+source: document.getElementById('filter-source'),
+  sourceSummary: document.getElementById('filter-source-summary'),
   partyRows: document.getElementById('encounter-party-rows'),
-  addChar: document.getElementById('encounter-add-character'),
+  levelButtons: document.getElementById('encounter-level-buttons'),
   difficulty: document.getElementById('encounter-difficulty'),
   generateBtn: document.getElementById('encounter-generate'),
   budget: document.getElementById('encounter-budget'),
@@ -74,7 +75,7 @@ function wireEvents() {
   });
 
   els.syncBtn?.addEventListener('click', () => backgroundSyncOpen5e(true));
-  els.addChar?.addEventListener('click', () => addPartyRow(1));
+  renderLevelButtons();
   els.difficulty?.addEventListener('change', updateBudgetOnly);
   els.generateBtn?.addEventListener('click', generateEncounter);
   els.critterBtn?.addEventListener('click', async () => {
@@ -129,7 +130,8 @@ function generateEncounter() {
   const chosen = [];
 
   // Randomized selection so repeated Generate clicks produce different mixes.
-  for (let attempts = 0; attempts < 200 && chosen.length < 20; attempts += 1) {
+    const maxCreatures = Math.max(1, getPartyLevels().length * 2);
+  for (let attempts = 0; attempts < 200 && chosen.length < maxCreatures; attempts += 1) {
     const candidates = pool.filter((monster) => monster.xp <= remaining);
     if (!candidates.length) break;
     const picked = candidates[Math.floor(Math.random() * candidates.length)];
@@ -139,7 +141,7 @@ function generateEncounter() {
   }
 
   // If random picks left too much budget, top off with best-fit random candidates.
-  for (let attempts = 0; attempts < 100 && remaining > 0 && chosen.length < 20; attempts += 1) {
+  for (let attempts = 0; attempts < 100 && remaining > 0 && chosen.length < maxCreatures; attempts += 1) {
     const candidates = pool.filter((monster) => monster.xp <= remaining);
     if (!candidates.length) break;
     const bestXp = Math.max(...candidates.map((monster) => monster.xp));
@@ -154,16 +156,25 @@ function generateEncounter() {
   if (els.generatedTotal) els.generatedTotal.textContent = `Generated ${chosen.length} monsters • ${used.toLocaleString()} / ${budget.toLocaleString()} XP`;
 }
 
-function updateFilters() { /* unchanged */
+function getSelectedSources() {
+  return [...(els.source?.querySelectorAll('input[type=checkbox]:checked') || [])].map((el) => el.value);
+}
+function updateSourceSummary() {
+  const selected = getSelectedSources();
+  if (!els.sourceSummary) return;
+  els.sourceSummary.textContent = !selected.length ? 'All sources' : `${selected.length} source${selected.length === 1 ? '' : 's'} selected`;
+}
+function updateFilters() {
   state.filters = {
     search: els.search.value, crMin: els.crMin.value, crMax: els.crMax.value,
-    type: els.type.value, alignment: els.alignment.value, source: els.source.value,
+    type: els.type.value, alignment: els.alignment.value, sources: getSelectedSources(),
   };
+  updateSourceSummary();
   repaintTableOnly();
 }
 function repaint() {
   const { types, sources } = buildFilters(state.monsters);
-  syncOptions(els.type, types); syncOptions(els.source, sources); repaintTableOnly(); updateBudgetOnly();
+  syncOptions(els.type, types); syncSourceOptions(sources); repaintTableOnly(); updateBudgetOnly();
 }
 function repaintTableOnly() {
   const filtered = applyFilters(state.monsters, state.filters);

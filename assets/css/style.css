@@ -1698,3 +1698,18 @@ small {
 .encounter-party-row { display: flex; gap: 0.75rem; align-items: end; }
 .encounter-party-row label { flex: 1; }
 .encounter-party-row input { width: 100%; }
+
+.encounter-filters label h4,
+.encounter-filters > div h4,
+.encounter-party-head h4 {
+  margin: 0 0 0.35rem;
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.encounter-cr-range { display: grid; grid-template-columns: 1fr 1fr; gap: 0.45rem; }
+.source-dropdown { border: 1px solid rgba(201, 162, 39, 0.3); border-radius: 0.45rem; padding: 0.4rem 0.55rem; }
+.source-options { display: grid; gap: 0.3rem; margin-top: 0.4rem; max-height: 10rem; overflow: auto; }
+.source-options label { display: block; font-size: 0.95rem; }
+.encounter-level-buttons { display: grid; grid-template-columns: repeat(10, minmax(0,1fr)); gap: 0.35rem; }
+.encounter-level-buttons .btn { min-width: 0; padding: 0.35rem 0.25rem; }
