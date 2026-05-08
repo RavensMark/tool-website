@@ -122,17 +122,33 @@ function monsterXp(monster) {
 }
 function generateEncounter() {
   const budget = computeBudget();
-  const pool = state.monsters.map((m) => ({ ...m, xp: monsterXp(m) })).filter((m) => m.xp > 0 && m.xp <= budget).sort((a, b) => b.xp - a.xp);
+  const pool = state.monsters
+    .map((m) => ({ ...m, xp: monsterXp(m) }))
+    .filter((m) => m.xp > 0 && m.xp <= budget);
   let remaining = budget;
   const chosen = [];
-  for (const monster of pool) {
-    while (monster.xp <= remaining && chosen.length < 20) {
-      chosen.push(monster);
-      remaining -= monster.xp;
-      if (remaining <= budget * 0.05) break;
-    }
-    if (remaining <= budget * 0.05 || chosen.length >= 20) break;
+
+  // Randomized selection so repeated Generate clicks produce different mixes.
+  for (let attempts = 0; attempts < 200 && chosen.length < 20; attempts += 1) {
+    const candidates = pool.filter((monster) => monster.xp <= remaining);
+    if (!candidates.length) break;
+    const picked = candidates[Math.floor(Math.random() * candidates.length)];
+    chosen.push(picked);
+    remaining -= picked.xp;
+    if (remaining <= budget * 0.05) break;
   }
+
+  // If random picks left too much budget, top off with best-fit random candidates.
+  for (let attempts = 0; attempts < 100 && remaining > 0 && chosen.length < 20; attempts += 1) {
+    const candidates = pool.filter((monster) => monster.xp <= remaining);
+    if (!candidates.length) break;
+    const bestXp = Math.max(...candidates.map((monster) => monster.xp));
+    const nearBest = candidates.filter((monster) => monster.xp >= bestXp * 0.7);
+    const picked = nearBest[Math.floor(Math.random() * nearBest.length)];
+    chosen.push(picked);
+    remaining -= picked.xp;
+  }
+
   renderMonsterTable(els.generatedBody, chosen.map((m) => ({ ...m, source: `${m.source || m.origin} • ${m.xp} XP` })));
   const used = budget - remaining;
   if (els.generatedTotal) els.generatedTotal.textContent = `Generated ${chosen.length} monsters • ${used.toLocaleString()} / ${budget.toLocaleString()} XP`;
