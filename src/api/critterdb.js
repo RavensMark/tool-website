@@ -31,6 +31,27 @@ function findMonstersInState(state) {
   return [];
 }
 
+function parseMonstersFromReadableMirrorMarkdown(text) {
+  const isLikelyCr = (value) => /^(\d+\/\d+|\d+)$/.test(String(value).trim());
+  const isLikelyType = (value) => /^(tiny|small|medium|large|huge|gargantuan)\b/i.test(String(value).trim());
+  const headings = [];
+  const headingPattern = /^##\s+(.+)$/gm;
+  let match;
+  while ((match = headingPattern.exec(text)) !== null) {
+    headings.push(match[1].trim());
+  }
+
+  const monsters = [];
+  for (let i = 0; i < headings.length - 2; i += 1) {
+    const name = headings[i];
+    const type = headings[i + 1];
+    const cr = headings[i + 2];
+    if (!isLikelyType(type) || !isLikelyCr(cr)) continue;
+    monsters.push({ name, type, cr });
+  }
+  return monsters;
+}
+
 function toReadableMirror(url) {
   return `https://r.jina.ai/http://${url.replace(/^https?:\/\//, '')}`;
 }
@@ -87,8 +108,10 @@ export async function importCritterDbMonsters(url) {
 
   const html = await fetchCritterDbHtml(url);
   const state = extractEmbeddedJson(html);
-  if (!state) throw new Error('No importable CritterDB data found in page source.');
-  const monsters = findMonstersInState(state);
+  let monsters = state ? findMonstersInState(state) : [];
+  if (!monsters.length) {
+    monsters = parseMonstersFromReadableMirrorMarkdown(html);
+  }
   if (!monsters.length) throw new Error('No monsters found in CritterDB payload.');
 
   return monsters
