@@ -47,7 +47,7 @@ const els = {
   source: document.getElementById('filter-source'),
   sourceSummary: document.getElementById('filter-source-summary'),
   partyRows: document.getElementById('encounter-party-rows'),
-  addChar: document.getElementById('encounter-add-character'),
+  quickAdd: document.getElementById('encounter-level-quickadd'),
   difficulty: document.getElementById('encounter-difficulty'),
   generateBtn: document.getElementById('encounter-generate'),
   budget: document.getElementById('encounter-budget'),
@@ -75,7 +75,6 @@ function wireEvents() {
   });
 
   els.syncBtn?.addEventListener('click', () => backgroundSyncOpen5e(true));
-  els.addChar?.addEventListener('click', () => addPartyRow(1));
   els.difficulty?.addEventListener('change', updateBudgetOnly);
   els.generateBtn?.addEventListener('click', generateEncounter);
   els.critterBtn?.addEventListener('click', async () => {
@@ -94,19 +93,33 @@ function wireEvents() {
   });
 }
 
-function ensurePartyRows() { if (!els.partyRows?.children.length) addPartyRow(1); }
+function ensurePartyRows() { if (!els.partyRows?.children.length) addPartyRow(1); buildQuickAddButtons(); }
+function buildQuickAddButtons() {
+  if (!els.quickAdd) return;
+  if (els.quickAdd.childElementCount) return;
+  for (let level = 1; level <= 20; level += 1) {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'btn ghost encounter-level-btn';
+    btn.textContent = String(level);
+    btn.setAttribute('aria-label', `Add level ${level} character`);
+    btn.addEventListener('click', () => addPartyRow(level));
+    els.quickAdd.appendChild(btn);
+  }
+}
 function addPartyRow(level) {
+  const clampedLevel = Math.max(1, Math.min(20, Number(level) || 1));
   const row = document.createElement('div');
   row.className = 'encounter-party-row';
-  row.innerHTML = `<label>Level <input type="number" min="1" max="20" value="${level}" class="encounter-party-level" /></label><button type="button" class="btn ghost">Remove</button>`;
-  row.querySelector('input')?.addEventListener('input', updateBudgetOnly);
+  row.dataset.level = String(clampedLevel);
+  row.innerHTML = `<p class="encounter-party-level-label">Level ${clampedLevel}</p><button type="button" class="btn ghost">Remove</button>`;
   row.querySelector('button')?.addEventListener('click', () => { row.remove(); updateBudgetOnly(); });
   els.partyRows?.appendChild(row);
   updateBudgetOnly();
 }
 function getPartyLevels() {
-  return [...(els.partyRows?.querySelectorAll('.encounter-party-level') || [])]
-    .map((el) => Math.max(1, Math.min(20, Number(el.value) || 1)));
+  return [...(els.partyRows?.querySelectorAll('.encounter-party-row') || [])]
+    .map((el) => Math.max(1, Math.min(20, Number(el.dataset.level) || 1)));
 }
 function computeBudget() {
   const diff = els.difficulty?.value || 'moderate';
