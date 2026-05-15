@@ -29,7 +29,11 @@ const XP_BUDGETS_BY_LEVEL = {
   19: { low: 5500, moderate: 10700, hard: 17200 }, 20: { low: 6400, moderate: 13200, hard: 22000 },
 };
 
-const state = { monsters: [], filters: { search: '', crMin: '', crMax: '', type: '', alignment: '', sources: [] } };
+const state = {
+  monsters: [],
+  filters: { search: '', crMin: '', crMax: '', type: '', alignment: '', sources: [] },
+  generated: [],
+};
 
 const els = {
   tbody: document.getElementById('encounter-monsters-body'),
@@ -65,6 +69,7 @@ async function init() {
   renderLastSynced();
   wireEvents();
   ensurePartyRows();
+  repaintGeneratedTable();
   maybeBackgroundSyncOpen5e();
 }
 
@@ -128,6 +133,7 @@ function computeBudget() {
 function updateBudgetOnly() {
   const budget = computeBudget();
   if (els.budget) els.budget.textContent = `${budget.toLocaleString()} XP target`;
+  repaintGeneratedTable();
 }
 function monsterXp(monster) {
   if (monster.cr === null || monster.cr === undefined || monster.cr === '') return 0;
@@ -142,7 +148,6 @@ function generateEncounter() {
   let remaining = budget;
   const chosen = [];
 
-  // Randomized selection so repeated Generate clicks produce different mixes.
   for (let attempts = 0; attempts < 200 && chosen.length < 20; attempts += 1) {
     const candidates = pool.filter((monster) => monster.xp <= remaining);
     if (!candidates.length) break;
@@ -152,7 +157,6 @@ function generateEncounter() {
     if (remaining <= budget * 0.05) break;
   }
 
-  // If random picks left too much budget, top off with best-fit random candidates.
   for (let attempts = 0; attempts < 100 && remaining > 0 && chosen.length < 20; attempts += 1) {
     const candidates = pool.filter((monster) => monster.xp <= remaining);
     if (!candidates.length) break;
@@ -163,9 +167,37 @@ function generateEncounter() {
     remaining -= picked.xp;
   }
 
-  renderMonsterTable(els.generatedBody, chosen.map((m) => ({ ...m, source: `${m.source || m.origin} • ${m.xp} XP` })));
-  const used = budget - remaining;
-  if (els.generatedTotal) els.generatedTotal.textContent = `Generated ${chosen.length} monsters • ${used.toLocaleString()} / ${budget.toLocaleString()} XP`;
+  state.generated = chosen;
+  repaintGeneratedTable();
+}
+
+function addGeneratedMonster(monster) {
+  state.generated.push({ ...monster, xp: monsterXp(monster) });
+  repaintGeneratedTable();
+}
+
+function removeGeneratedMonster(index) {
+  state.generated.splice(index, 1);
+  repaintGeneratedTable();
+}
+
+function repaintGeneratedTable() {
+  const budget = computeBudget();
+  const displayRows = state.generated.map((m, index) => ({
+    ...m,
+    _index: index,
+    source: `${m.source || m.origin} • ${(m.xp || monsterXp(m)).toLocaleString()} XP`,
+  }));
+
+  renderMonsterTable(els.generatedBody, displayRows, {
+    actionLabel: 'Delete',
+    onAction: (m) => removeGeneratedMonster(m._index),
+  });
+
+  const used = state.generated.reduce((sum, m) => sum + (m.xp || monsterXp(m)), 0);
+  if (els.generatedTotal) {
+    els.generatedTotal.textContent = `Generated ${state.generated.length} monsters • ${used.toLocaleString()} / ${budget.toLocaleString()} XP`;
+  }
 }
 
 function getSelectedSources() {
@@ -190,7 +222,10 @@ function repaint() {
 }
 function repaintTableOnly() {
   const filtered = applyFilters(state.monsters, state.filters);
-  renderMonsterTable(els.tbody, filtered);
+  renderMonsterTable(els.tbody, filtered, {
+    actionLabel: 'Add',
+    onAction: addGeneratedMonster,
+  });
   els.status.textContent = `${filtered.length} monsters shown (${state.monsters.length} total cached).`;
 }
 function syncOptions(select, values) {
