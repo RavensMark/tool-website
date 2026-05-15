@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Raven's Mark Tools</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <link rel="alternate icon" href="assets/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=EB+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body class="mode-player is-home">
+  <div class="page-bg" aria-hidden="true"></div>
+  <header class="site-header">
+    <div class="mode-toggle-wrap">
+      <label class="mode-switch" for="mode-toggle">
+        <span class="mode-switch-label">Player</span>
+        <input type="checkbox" id="mode-toggle" aria-label="Toggle between Player mode and DM mode" />
+        <span class="mode-switch-ui" aria-hidden="true"></span>
+        <span class="mode-switch-label">DM</span>
+      </label>
+    </div>
+    <div class="brand">
+      <button type="button" class="brand-icon-btn" id="brand-blast" aria-label="Celebrate with feather and raven emojis">
+        <span class="brand-icon" aria-hidden="true" style="padding-bottom: 28px;">🪶</span>
+      </button>
+      <div class="brand-text">
+        <h1><button type="button" class="brand-home-btn" id="brand-home" aria-label="Return to landing page">Raven's Mark Tools</button></h1>
+        <p class="tagline">CAW! CAW! CAW!</p>
+      </div>
+    </div>
+    <nav class="tabs" role="tablist" aria-label="Tools">
+      <button type="button" class="tab dm-only" role="tab" id="tab-boopsum" aria-selected="false" aria-controls="panel-boopsum" data-tab="boopsum">BoopSum</button>
+      <button type="button" class="tab" role="tab" id="tab-loot" aria-selected="false" aria-controls="panel-loot" data-tab="loot">Loot</button>
+      <button type="button" class="tab dm-only" role="tab" id="tab-staff" aria-selected="false" aria-controls="panel-staff" data-tab="staff">Staff Points</button>
+      <button type="button" class="tab dm-only" role="tab" id="tab-questinfo" aria-selected="false" aria-controls="panel-questinfo" data-tab="questinfo">Quest Info</button>
+      <button type="button" class="tab" role="tab" id="tab-questnotes" aria-selected="false" aria-controls="panel-questnotes" data-tab="questnotes">Quest Notes</button>
+      <button type="button" class="tab" role="tab" id="tab-character" aria-selected="false" aria-controls="panel-character" data-tab="character">Character Creation</button>
+      <button type="button" class="tab" role="tab" id="tab-avrae" aria-selected="false" aria-controls="panel-avrae" data-tab="avrae">Avrae</button>
+      <button type="button" class="tab dm-only" role="tab" id="tab-encounter" aria-selected="false" aria-controls="panel-encounter" data-tab="encounter">Encounter Generator</button>
+      <button type="button" class="tab" role="tab" id="tab-links" aria-selected="false" aria-controls="panel-links" data-tab="links">Useful Links</button>
+    </nav>
+  </header>
+
+  <main>
+
+    <section id="panel-home" class="panel is-active">
+      <div class="panel-inner">
+        <header class="panel-head landing-head">
+          <h2>Tool Catalogue</h2>
+          <p class="lede">A set of tools for DMs and players. Use the toggle in the top-right to switch</p>
+        </header>
+
+        <div class="card landing-card">
+          <div class="landing-grid">
+            <button type="button" class="landing-tile dm-only" data-open-tab="boopsum">
+              <h3><span class="landing-tile-icon" aria-hidden="true">🧮</span>BoopSum</h3>
+              <p>Determine XP, gold, and loot reward budgets after your quest.</p>
+            </button>
+            <button type="button" class="landing-tile" data-open-tab="loot">
+              <h3><span class="landing-tile-icon" aria-hidden="true">💰Fantasy CostCo (Loot Search)</span></h3>
+              <p>Search for loot to give your players or find things to spend your money on.</p>
+            </button>
+            <button type="button" class="landing-tile dm-only" data-open-tab="staff">
+              <h3><span class="landing-tile-icon" aria-hidden="true">🪶</span>Staff Points</h3>
+              <p>Check what staff rewards you are ready to redeem.</p>
+            </button>
+            <button type="button" class="landing-tile dm-only" data-open-tab="questinfo">
+              <h3><span class="landing-tile-icon" aria-hidden="true">📜</span>Quest Posting Creator</h3>
+              <p>A quick builder to set up your quest posting.</p>
+            </button>
+            <button type="button" class="landing-tile" data-open-tab="questnotes">
+              <h3><span class="landing-tile-icon" aria-hidden="true">📝</span>Quest Notes</h3>
+              <p>A place to make notes for your quest.</p>
+            </button>
+            <button type="button" class="landing-tile" data-open-tab="character">
+              <h3><span class="landing-tile-icon" aria-hidden="true">🧙</span>Character Creation</h3>
+              <p>Character Creation pre-screening</p>
+            </button>
+            <button type="button" class="landing-tile" data-open-tab="avrae">
+              <h3><span class="landing-tile-icon" aria-hidden="true">🧠</span>Avrae Assistants</h3>
+              <p>Visually build avrae commands, combats, etc.</p>
+            </button>
+            <button type="button" class="landing-tile dm-only" data-open-tab="encounter">
+              <h3><span class="landing-tile-icon" aria-hidden="true">⚔️</span>Encounter Generator</h3>
+              <p>Build encounters from Open5e and imported CritterDB bestiaries.</p>
+            </button>
+            <button type="button" class="landing-tile" data-open-tab="links">
+              <h3><span class="landing-tile-icon" aria-hidden="true">🗺️</span>Useful Links</h3>
+              <p>Quick references, utilities, and RM resources.</p>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="panel-questnotes" class="panel" role="tabpanel" aria-labelledby="tab-questnotes" hidden>
+      <div class="panel-inner">
+        <header class="panel-head">
+          <h2>Quest Notes</h2>
+          <p class="lede">Create notes to remember what is going on.</p>
+        </header>
+
+        <div class="card questnotes-controls">
+          <p class="alert warning questnotes-warning"><strong>Note:</strong> These notes are saved in the browser. Clearing browser data or switching browsers/devices can remove them.</p>
+          <div class="questnotes-actions-row">
+            <label class="field questnotes-new-quest-field">
+              <span>New quest name</span>
+              <input type="text" id="qn-new-quest-name" placeholder="e.g. Spudborne's Lament" />
+            </label>
+            <button type="button" class="btn primary" id="qn-add-quest">Add Quest</button>
+          </div>
+        </div>
+
+        <div class="questnotes-workspace">
+          <nav class="questnotes-quest-tabs" id="qn-quest-tabs" aria-label="Quest notes tabs"></nav>
+          <div id="qn-empty" class="card" hidden>
+            <p class="hint">No quests yet. Add one above to begin writing notes.</p>
+          </div>
+          <div id="qn-editor" class="card questnotes-editor" hidden>
+            <div class="questnotes-editor-head">
+              <h3 id="qn-active-quest-title"></h3>
+              <button type="button" class="btn ghost" id="qn-delete-quest">Delete Quest</button>
+            </div>
+            <div class="questnotes-actions-row">
+              <label class="field questnotes-new-heading-field">
+                <span>New tab</span>
+                <input type="text" id="qn-new-heading-name" placeholder="e.g. Story So Far" />
+              </label>
+              <button type="button" class="btn ghost" id="qn-add-heading">Add Heading</button>
+            </div>
+            <nav class="questnotes-heading-tabs" id="qn-heading-tabs" aria-label="Quest section headings"></nav>
+            <div class="questnotes-text-wrap">
+              <label class="field">
+                <span id="qn-active-heading-title">Notes</span>
+                <textarea id="qn-note-text" rows="12" placeholder="Write some notes..."></textarea>
+              </label>
+              <div class="questnotes-actions-row">
+                <button type="button" class="btn ghost" id="qn-rename-heading">Rename Tab</button>
+                <button type="button" class="btn ghost" id="qn-delete-heading">Delete Tab</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="panel-boopsum" class="panel" role="tabpanel" aria-labelledby="tab-boopsum" hidden>
+      <div class="panel-inner">
+        <header class="panel-head">
+          <h2>BoopSum</h2>
+          <p class="lede">Loot calculation for DMs.</p>
+        </header>
+
+        <form id="boopsum-form" class="card form-grid">
+          <label class="field">
+            <span>Total adjusted XP</span>
+            <input type="number" name="totalXp" min="0" step="1" required placeholder="e.g. 12000" />
+          </label>
+          <fieldset class="field boopsum-fieldset">
+            <legend>Quest type</legend>
+            <div class="boopsum-choice-row" role="radiogroup" aria-label="Quest type">
+              <label class="boopsum-choice">
+                <input type="radio" name="questType" value="graveyard" />
+                <span>Graveyard</span>
+              </label>
+              <label class="boopsum-choice">
+                <input type="radio" name="questType" value="hunt" />
+                <span>Hunt</span>
+              </label>
+              <label class="boopsum-choice">
+                <input type="radio" name="questType" value="quest" checked />
+                <span>Quest</span>
+              </label>
+            </div>
+          </fieldset>
+        </form>
+
+        <div class="card">
+          <div class="players-head">
+            <h3>Party</h3>
+            <button type="button" class="btn ghost" id="add-player">Add player</button>
+          </div>
+          <div id="player-rows" class="player-rows"></div>
+        </div>
+
+        <div class="actions">
+          <button type="button" class="btn primary" id="calc-boopsum">Calculate</button>
+        </div>
+
+        <div id="boopsum-error" class="alert error" hidden></div>
+
+        <article id="boopsum-result" class="result card" hidden>
+          <h3 class="result-title">Loot Calculation for DMs</h3>
+
+          <h4>Party make-up</h4>
+          <p><span id="out-nparty"></span> players: <span id="out-levels"></span> <span class="muted">(Avg: <span id="out-apl"></span>)</span></p>
+          <p><strong>Total XP:</strong> <span id="out-totalxp"></span></p>
+
+          <h4>Experience</h4>
+          <p><strong>XP Each:</strong> <span id="out-xp-each"></span></p>
+          
+          <h4>Loot</h4>
+          <label class="field">
+            <span>Quest tuning</span>
+            <div class="boopsum-slider-wrap">
+              <input
+                type="range"
+                name="questTuning"
+                id="quest-tuning"
+                min="0"
+                max="2"
+                step="1"
+                value="1"
+                list="quest-tuning-markers"
+              />
+              <datalist id="quest-tuning-markers">
+                <option value="0" label="Quick"></option>
+                <option value="1" label="Standard"></option>
+                <option value="2" label="Lore"></option>
+              </datalist>
+              <div class="boopsum-slider-labels" aria-hidden="true">
+                <span>Quick / low-interaction</span>
+                <span>Standard</span>
+                <span>Lore / high-interaction</span>
+              </div>
+              <label class="boopsum-precise-toggle">
+                <input type="checkbox" id="quest-tuning-precise" />
+                <span>Precise Tweaking</span>
+              </label>
+            </div>
+          </label>
+          <p><strong>Quest type:</strong> <span id="out-quest-type"></span></p>
+          <p><strong>Tuning:</strong> <span id="out-effort-level"></span></p>
+          <p><strong>Gold each:</strong> <span id="out-gp-selected"></span></p>
+          <p id="out-itemloot-wrap"><strong>Item loot pool:</strong> <span id="out-itemloot"></span> <span class="muted">gp worth of items</span></p>
+          <p id="out-loot-note" class="fine-print"></p>
+
+          <div id="out-party-summary" class="party-summary-box" hidden>
+            <p class="party-summary-label">Boopsum command</p>
+            <div class="copyable-output" data-copy-target="#out-boopsum-command">
+              <p id="out-boopsum-command" class="party-summary-text mono-output"></p>
+              <button type="button" class="btn ghost copyable-output-btn" aria-label="Copy Boopsum command">Copy</button>
+            </div>
+            <p class="party-summary-label">Character/Players, separated by commas</p>
+            <div class="copyable-output" data-copy-target="#out-party-summary-text">
+              <p id="out-party-summary-text" class="party-summary-text mono-output"></p>
+              <button type="button" class="btn ghost copyable-output-btn" aria-label="Copy character and player list">Copy</button>
+            </div>
+            <p class="party-summary-label">Loot Log</p>
+            <div class="copyable-output" data-copy-target="#out-loot-log">
+              <p id="out-loot-log" class="party-summary-text mono-output preformatted"></p>
+              <button type="button" class="btn ghost copyable-output-btn" aria-label="Copy loot log">Copy</button>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="panel-loot" class="panel" role="tabpanel" aria-labelledby="tab-loot" hidden>
+      <div class="panel-inner loot-panel-inner">
+        <header class="panel-head">
+          <h2>Loot</h2>
+          <p class="lede">Browse loot items from the spreadsheet. Budget your gold.</p>
+        </header>
+
+        <div class="loot-layout">
+          <div class="loot-main">
+            <div class="card loot-controls">
+              <div class="loot-budget-row">
+                <label class="field loot-budget-field">
+                  <span>Budget (GP)</span>
+                  <input type="number" id="loot-budget" min="0" step="1" placeholder="e.g. 500" />
+                </label>
+                <button type="button" class="btn primary" id="loot-search">Filter for Budget</button>
+                <button type="button" class="btn ghost" id="loot-show-all">Remove Budget Filter</button>
+              </div>
+              <div class="loot-filter-row">
+                <label class="field loot-filter-field">
+                  <span>Search Name</span>
+                  <input type="search" id="loot-name-filter" placeholder="e.g. Cloak" />
+                </label>
+                <label class="field loot-filter-field">
+                  <span>Filter Type</span>
+                  <select id="loot-type-filter">
+                    <option value="">All types</option>
+                  </select>
+                </label>
+                <label class="field loot-filter-field loot-filter-toggle" for="loot-granular-filters">
+                  <span>Granular Filters</span>
+                  <input type="checkbox" id="loot-granular-filters" />
+                </label>
+                <label class="field loot-filter-field">
+                  <span>Sort By</span>
+                  <select id="loot-sort-by">
+                    <option value="name">Name</option>
+                    <option value="type">Type</option>
+                    <option value="cost">Cost</option>
+                  </select>
+                </label>
+                <label class="field loot-filter-field">
+                  <span>Sort Order</span>
+                  <select id="loot-sort-dir">
+                    <option value="asc">Ascending</option>
+                    <option value="desc">Descending</option>
+                  </select>
+                </label>
+              </div>
+              <div id="loot-status" class="loot-status" role="status" aria-live="polite"></div>
+              <div id="loot-error" class="alert error" hidden></div>
+            </div>
+
+            <div id="loot-table-wrap" class="card loot-table-card" hidden>
+              <div class="loot-table-scroll">
+                <table class="loot-table" id="loot-table">
+                  <thead>
+                    <tr id="loot-header-row"></tr>
+                  </thead>
+                  <tbody id="loot-tbody"></tbody>
+                </table>
+              </div>
+              <div class="loot-pagination" id="loot-pagination" hidden></div>
+            </div>
+          </div>
+
+          <aside class="loot-cart card" id="loot-cart-panel" aria-labelledby="loot-cart-title">
+            <div class="loot-cart-head">
+              <h3 id="loot-cart-title">Cart</h3>
+            </div>
+            <p class="hint loot-cart-hint">Selected items and running total (GP).</p>
+            <ul class="loot-cart-list" id="loot-cart-list"></ul>
+            <div class="loot-cart-footer">
+              <p class="loot-cart-total">
+                <strong>Total:</strong>
+                <span id="loot-cart-total">0</span>
+                <span class="muted">gp</span>
+                <span id="loot-cart-novalue-warning" class="loot-cart-novalue-warning" hidden title="Cart contains one or more No Value items." aria-label="Cart contains No Value items">⚠️</span>
+              </p>
+              <div class="loot-cart-buttons">
+                <button type="button" class="btn ghost" id="loot-cart-clear">Clear cart</button>
+              </div>
+            </div>
+          </aside>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="panel-staff" class="panel" role="tabpanel" aria-labelledby="tab-staff" hidden>
+      <div class="panel-inner">
+        <header class="panel-head">
+          <h2>Staff Points</h2>
+        </header>
+
+        <div class="card staff-controls">
+          <div class="staff-lookup-row">
+            <label class="field staff-username-field">
+              <span>Username</span>
+              <input type="text" id="staff-username" name="staffUsername" autocomplete="username" placeholder="e.g. boopyboop." />
+            </label>
+            <button type="button" class="btn primary" id="staff-lookup">Look up</button>
+          </div>
+          <p class="hint staff-hint">Your Discord username (Case Insensitive).</p>
+          <div id="staff-status" class="staff-status" role="status" aria-live="polite"></div>
+          <div id="staff-error" class="alert error" hidden></div>
+        </div>
+
+        <div id="staff-balance-wrap" class="card staff-balance-card" hidden>
+          <p class="staff-balance-line">
+            <strong>Current staff points:</strong>
+            <span id="staff-balance" class="staff-balance-value"></span>
+            <span class="muted">SP</span>
+          </p>
+        </div>
+
+        <div class="card staff-rewards-card">
+          <h3 class="staff-rewards-title">Rewards</h3>
+          <div class="staff-lookup-row">
+            <label class="field staff-username-field">
+              <span>Level</span>
+              <input type="number" id="staff-level" name="staffLevel" min="1" max="20" step="1" value="1" />
+            </label>
+          </div>
+          <div class="staff-table-scroll">
+            <table class="staff-rewards-table" aria-label="Staff point rewards">
+              <thead>
+                <tr>
+                  <th scope="col">Reward</th>
+                  <th scope="col">Cost</th>
+                  <th scope="col">Amount</th>
+                </tr>
+              </thead>
+              <tbody id="staff-rewards-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="panel-questinfo" class="panel" role="tabpanel" aria-labelledby="tab-questinfo" hidden>
+      <div class="panel-inner">
+        <header class="panel-head">
+          <h2>Quest Info</h2>
+          <p class="lede">A visual Quest Posting builder</p>
+        </header>
+
+        <div class="card questinfo-form">
+          <fieldset class="questinfo-fieldset">
+            <legend>Rank</legend>
+            <div class="questinfo-rank-row">
+              <div class="toggle-row" id="qi-rank" role="group" aria-label="Quest rank"></div>
+              <label class="questinfo-inline-check">
+                <input type="checkbox" id="qi-invite-only" />
+                <span>Invite Only</span>
+              </label>
+            </div>
+          </fieldset>
+
+          <fieldset class="questinfo-fieldset">
+            <legend>Type</legend>
+            <div class="toggle-row" id="qi-type" role="group" aria-label="Quest type"></div>
+          </fieldset>
+
+          <fieldset class="questinfo-fieldset">
+            <legend>Length</legend>
+            <div class="toggle-row" id="qi-length" role="group" aria-label="Quest length"></div>
+          </fieldset>
+
+          <fieldset class="questinfo-fieldset">
+            <legend>Difficulty</legend>
+            <div class="toggle-row" id="qi-difficulty" role="group" aria-label="Quest difficulty"></div>
+          </fieldset>
+
+          <label class="field">
+            <span>Quest Line</span>
+            <input type="text" id="qi-quest-line" autocomplete="off" placeholder="e.g. Ashes of Emberwatch" />
+          </label>
+
+          <fieldset class="questinfo-fieldset questinfo-cw-fieldset">
+            <legend>Content warnings</legend>
+            <div id="qi-cw-status" class="questinfo-cw-status" role="status" aria-live="polite"></div>
+            <label class="field questinfo-cw-filter">
+              <span>Filter warnings</span>
+              <input type="search" id="qi-cw-filter" autocomplete="off" placeholder="Type to narrow the list" />
+            </label>
+            <div class="questinfo-cw-actions">
+              <button type="button" class="btn ghost" id="qi-cw-select-visible">Select visible</button>
+              <button type="button" class="btn ghost" id="qi-cw-clear">Clear all</button>
+            </div>
+            <div id="qi-cw-list" class="questinfo-cw-list"></div>
+          </fieldset>
+        </div>
+
+        <div class="card questinfo-output-card">
+          <h3 class="questinfo-output-title">Quest Markdown</h3>
+          <p class="hint questinfo-output-hint">Copy this block into Discord.</p>
+          <label class="field">
+            <span class="sr-only">Generated markdown</span>
+            <div class="copyable-output" data-copy-target="#qi-md-output">
+              <textarea id="qi-md-output" class="questinfo-md-output mono-output" readonly rows="14" spellcheck="false"></textarea>
+              <button type="button" class="btn ghost copyable-output-btn" aria-label="Copy quest markdown">Copy</button>
+            </div>
+          </label>
+        </div>
+      </div>
+    </section>
+
+    <section id="panel-avrae" class="panel" role="tabpanel" aria-labelledby="tab-avrae" hidden>
+      <div class="panel-inner">
+        <header class="panel-head">
+          <h2>Avrae</h2>
+          <p class="lede">Avrae tools for general use and encounter prep.</p>
+        </header>
+        <nav class="avrae-subtabs" role="tablist" aria-label="Avrae tools">
+          <button type="button" class="avrae-subtab is-active" id="tab-avrae-general" role="tab" aria-selected="true" aria-controls="panel-avrae-general" data-avrae-subtab="general">General Use</button>
+          <button type="button" class="avrae-subtab" id="tab-avrae-use" role="tab" aria-selected="false" aria-controls="panel-avrae-use" data-avrae-subtab="use">!use Builder</button>
+          <button type="button" class="avrae-subtab" id="tab-avrae-equip" role="tab" aria-selected="false" aria-controls="panel-avrae-equip" data-avrae-subtab="equip">!equip Builder</button>
+          <button type="button" class="avrae-subtab" id="tab-avrae-combat" role="tab" aria-selected="false" aria-controls="panel-avrae-combat" data-avrae-subtab="combat">Combat Planning</button>
+        </nav>
+        <div class="card avrae-frame-card is-active" id="panel-avrae-general" role="tabpanel" aria-labelledby="tab-avrae-general" data-avrae-pane="general">
+          <p class="hint avrae-frame-hint">If General Use fails to load, <a href="https://avrae-ui.netlify.app/">open it directly</a>.</p>
+          <iframe
+            class="avrae-frame"
+            src="https://avrae-ui.netlify.app/"
+            title="Avrae UI"
+            loading="lazy"
+            referrerpolicy="strict-origin-when-cross-origin"
+          ></iframe>
+        </div>
+        <div class="card avrae-frame-card" id="panel-avrae-combat" role="tabpanel" aria-labelledby="tab-avrae-combat" data-avrae-pane="combat" hidden>
+          <p class="hint avrae-frame-hint">If Combat Planning fails to load, <a href="https://www.corvux.me/Avrae_Combat_Planner/">open it directly</a>.</p>
+          <iframe
+            class="avrae-frame"
+            src="https://www.corvux.me/Avrae_Combat_Planner/"
+            title="Avrae Combat Planner"
+            loading="lazy"
+            referrerpolicy="strict-origin-when-cross-origin"
+          ></iframe>
+        </div>
+        <div class="card avrae-use-card" id="panel-avrae-use" role="tabpanel" aria-labelledby="tab-avrae-use" data-avrae-pane="use" hidden>
+          <form id="avrae-use-form" class="avrae-use-form">
+            <div class="avrae-use-form-topbar">
+              <label class="avrae-use-advanced-toggle"><input type="checkbox" id="avrae-use-advanced-toggle" /> Advanced Settings</label>
+            </div>
+            <fieldset class="avrae-use-group">
+              <legend>Saving Throw</legend>
+              <div class="avrae-use-grid">
+                <label class="field"><span title="Which save the target rolls.">Save Stat</span><select id="avrae-use-save"><option>DEX</option><option>STR</option><option>CON</option><option>WIS</option><option>CHA</option><option>INT</option></select></label>
+                <label class="field"><span title="Save difficulty class.">DC</span><input type="number" id="avrae-use-dc" value="10" step="1" /></label>
+                <label class="field"><span title="Adds to the save roll. Dice expressions allowed.">Bonus</span><input type="text" id="avrae-use-bonus" placeholder="1d4 or -2" /></label>
+                <label class="field"><span title="Set advantage or disadvantage on the save roll.">Advantage/Disadvantage</span><select id="avrae-use-rollmod"><option value="">None</option><option value="adv">Advantage</option><option value="dis">Disadvantage</option></select></label>
+              </div>
+              <div class="avrae-use-check-row">
+                <label class="avrae-use-advanced-only" title="Hide DC and damage."><input type="checkbox" id="avrae-use-hide" /> Hide DC and Damage</label>
+              </div>
+            </fieldset>
+
+            <fieldset class="avrae-use-group">
+              <legend>Targets</legend>
+              <div class="avrae-use-check-row avrae-use-advanced-only">
+                <label title="Targets every combatant."><input type="checkbox" id="avrae-use-target-all" /> All</label>
+                <label title="Do not auto-target your active character."><input type="checkbox" id="avrae-use-target-noself" /> Do not target myself</label>
+              </div>
+              <div id="avrae-use-targets" class="avrae-use-targets"></div>
+              <button type="button" class="btn ghost" id="avrae-use-add-target">+ Add target</button>
+            </fieldset>
+
+            <fieldset class="avrae-use-group">
+              <legend>Damage & Effects</legend>
+              <fieldset class="avrae-use-subgroup">
+                <legend>Attack</legend>
+                <div class="avrae-use-grid">
+                  <label class="field"><span title="Damage on failed save.">Damage</span><input type="text" id="avrae-use-damage" placeholder="8d6[fire]" /></label>
+                  <label class="field"><span title="Minimum damage when using -d &quot;damage|min|max&quot;.">Min</span><input type="number" id="avrae-use-dmg-min" step="1" /></label>
+                  <label class="field"><span title="Maximum damage when using -d &quot;damage|min|max&quot;.">Max</span><input type="number" id="avrae-use-dmg-max" step="1" /></label>
+                </div>
+              </fieldset>
+              <fieldset class="avrae-use-subgroup">
+                <legend>Effect</legend>
+                <div class="avrae-use-grid">
+                  <label class="field"><span title="Format: name|effects|duration.">Effect</span><input type="text" id="avrae-use-effect" placeholder="Burning|ac -2|2" /></label>
+                  <label class="field"><span title="Description for target effect.">Effect Description</span><input type="text" id="avrae-use-effectdesc" /></label>
+                  <label class="field"><span title="Format: name|effects|duration for the user.">Self-Effect</span><input type="text" id="avrae-use-seffect" /></label>
+                  <label class="field"><span title="Description for self effect.">Self-Effect Description</span><input type="text" id="avrae-use-seffectdesc" /></label>
+                </div>
+              </fieldset>
+              <div class="avrae-use-grid">
+                <label class="field"><span title="Overrides the user name for -seffect.">User</span><input type="text" id="avrae-use-user" /></label>
+              </div>
+              <div class="avrae-use-check-row">
+                <label title="Double dice in -d."><input type="checkbox" name="avrae-use-dmgmods" value="crit" /> Auto-Crit</label>
+                <label title="Halve damage on success."><input type="checkbox" name="avrae-use-dmgmods" value="half" /> Half damage on success</label>
+                <label title="Half on fail, 0 on success."><input type="checkbox" name="avrae-use-dmgmods" value="avoid" /> Half damage on failure. 0 on success</label>
+              </div>
+            </fieldset>
+
+            <fieldset class="avrae-use-group">
+              <legend>Consumables</legend>
+              <fieldset class="avrae-use-subgroup">
+                <legend>Counters</legend>
+                <div class="avrae-use-grid">
+                  <label class="field"><span title="Counter name to consume.">Consumable Counter (CC)</span><input type="text" id="avrae-use-cc" /></label>
+                  <label class="field"><span title="How many uses -cc changes.">Decrease CC by (default 1)</span><input type="number" id="avrae-use-ccnum" step="1" /></label>
+                  <label class="field"><span title="Spell slot level.">Spell Slot Level</span><input type="number" id="avrae-use-slot" min="1" max="9" step="1" /></label>
+                  <label class="field"><span title="How many slots -slot changes.">Decrease SLOT by (default 1)</span><input type="number" id="avrae-use-slotnum" step="1" /></label>
+                </div>
+              </fieldset>
+              <fieldset class="avrae-use-subgroup avrae-use-advanced-only">
+                <legend>Items</legend>
+                <div class="avrae-use-grid">
+                  <label class="field"><span title="Format: container|item.">ITEM</span><input type="text" id="avrae-use-item" placeholder="Backpack|Arrow" /></label>
+                  <label class="field"><span title="How many items to remove/add.">ITEMQTY</span><input type="number" id="avrae-use-itemqty" step="1" /></label>
+                </div>
+              </fieldset>
+              <div class="avrae-use-check-row"><label title="Set cc/slot/item amounts to 0."><input type="checkbox" id="avrae-use-i" /> Ignore Consumables</label></div>
+            </fieldset>
+
+            <fieldset class="avrae-use-group">
+              <legend>Flavor & Meta</legend>
+              <div class="avrae-use-grid">
+                <label class="field"><span title="Embed title. [name] and [sname] are replaced.">Title</span><input type="text" id="avrae-use-title" /></label>
+                <label class="field"><span title="Flavor text in output.">Flavor Phrase</span><input type="text" id="avrae-use-phrase" /></label>
+                <label class="field"><span title="Description/rules text field.">Description</span><input type="text" id="avrae-use-desc" /></label>
+                <label class="field avrae-use-advanced-only"><span title="Thumbnail image URL.">Thumb</span><input type="url" id="avrae-use-thumb" /></label>
+                <label class="field avrae-use-advanced-only"><span title="Full-size image URL.">Image</span><input type="url" id="avrae-use-image" /></label>
+                <label class="field avrae-use-advanced-only"><span title="Embed side color hex.">Color</span><input type="text" id="avrae-use-color" placeholder="ffd166" /></label>
+                <label class="field avrae-use-advanced-only"><span title="Extra display roll.">Extra Display Roll</span><input type="text" id="avrae-use-roll" /></label>
+                <label class="field avrae-use-advanced-only"><span title="Number value callable with {n}.">Repeat (N) times</span><input type="number" id="avrae-use-n" step="1" /></label>
+                <label class="field avrae-use-advanced-only"><span title="Label shown for -n.">NDESC</span><input type="text" id="avrae-use-ndesc" /></label>
+                <label class="field avrae-use-advanced-only"><span title="Load args from cvar/uvar.">CVAR</span><input type="text" id="avrae-use-cvar" /></label>
+                <label class="field avrae-use-advanced-only"><span title="Output codeblock for cvar creation.">OUT</span><input type="text" id="avrae-use-out" /></label>
+              </div>
+            </fieldset>
+          </form>
+          <div class="copyable-output avrae-use-output-wrap" data-copy-target="#avrae-use-output" id="avrae-use-builder">
+            <textarea id="avrae-use-output" class="questinfo-md-output mono-output" rows="6" readonly spellcheck="false"></textarea>
+            <button type="button" class="btn ghost copyable-output-btn" aria-label="Copy use command">Copy</button>
+          </div>
+        </div>
+        <div class="card avrae-use-card" id="panel-avrae-equip" role="tabpanel" aria-labelledby="tab-avrae-equip" data-avrae-pane="equip" hidden>
+          <form id="avrae-equip-form" class="avrae-use-form">
+            <div class="avrae-use-form-topbar">
+              <label class="avrae-use-advanced-toggle"><input type="checkbox" id="avrae-equip-advanced-toggle" /> Advanced Settings</label>
+            </div>
+            <fieldset class="avrae-use-group">
+              <legend>Weapon</legend>
+              <div class="avrae-use-grid">
+                <label class="field"><span>Weapon</span><select id="avrae-equip-weapon"></select></label>
+                <label class="field"><span>Custom Name</span><input type="text" id="avrae-equip-name" placeholder="Frost Brand Shortsword" /></label>
+                <label class="field"><span>To Hit Bonus (-b)</span><input type="number" id="avrae-equip-bonus-hit" step="1" /></label>
+                <label class="field"><span>Damage Bonus (-d)</span><input type="number" id="avrae-equip-bonus-dmg" step="1" /></label>
+                <label class="field"><span>Stat Override</span><select id="avrae-equip-stat"><option value="">Default</option><option>str</option><option>dex</option><option>con</option><option>int</option><option>wis</option><option>cha</option></select></label>
+                <label class="field avrae-equip-advanced-only"><span>Target</span><input type="text" id="avrae-equip-target" placeholder="Target in initiative" /></label>
+                <label class="field"><span>Mary &lt;verb&gt; a dagger</span><input type="text" id="avrae-equip-verb" placeholder="slashes" /></label>
+                <label class="field"><span>Crit on #</span><input type="number" id="avrae-equip-criton" min="2" max="20" step="1" /></label>
+                <label class="field"><span>Extra Crit Damage</span><input type="text" id="avrae-equip-crit-extra" placeholder="1d8" /></label>
+              </div>
+            </fieldset>
+
+            <fieldset class="avrae-use-group">
+              <legend>Flags</legend>
+              <div class="avrae-use-check-row">
+                <label><input type="checkbox" id="avrae-equip-nodmg" /> Non-Damaging</label>
+                <label><input type="checkbox" id="avrae-equip-magical" /> magical</label>
+                <label><input type="checkbox" id="avrae-equip-adamantine" /> adamantine</label>
+                <label><input type="checkbox" id="avrae-equip-silvered" /> silvered</label>
+                <label><input type="checkbox" id="avrae-equip-monk" /> Monk Weapon</label>
+                <label><input type="checkbox" id="avrae-equip-2h" /> Two-handed</label>
+                <label><input type="checkbox" id="avrae-equip-off" /> Off-hand</label>
+                <label><input type="checkbox" id="avrae-equip-savage" /> Savage Attacker</label>
+                <label><input type="checkbox" id="avrae-equip-proper" /> Named Item</label>
+              </div>
+            </fieldset>
+
+            <fieldset class="avrae-use-group">
+              <legend>Fighting Styles</legend>
+              <div class="avrae-use-check-row">
+                <label><input type="checkbox" id="avrae-equip-archery" /> archery</label>
+                <label><input type="checkbox" id="avrae-equip-dueling" /> dueling</label>
+                <label><input type="checkbox" id="avrae-equip-gwf" /> Great Weapon Fighter</label>
+              </div>
+            </fieldset>
+          </form>
+          <div class="copyable-output avrae-use-output-wrap" data-copy-target="#avrae-equip-output" id="avrae-equip-builder">
+            <textarea id="avrae-equip-output" class="questinfo-md-output mono-output" rows="4" readonly spellcheck="false"></textarea>
+            <button type="button" class="btn ghost copyable-output-btn" aria-label="Copy equip command">Copy</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="panel-character" class="panel" role="tabpanel" aria-labelledby="tab-character" hidden>
+      <div class="panel-inner">
+        <header class="panel-head">
+          <h2>Character Creation</h2>
+          <p class="lede">Quickly run through often-forgotten creation steps</p>
+        </header>
+
+        <div class="card character-card">
+          <h3>Point Buy Calculator</h3>
+          <div class="character-stats-grid" id="cc-stats-grid"></div>
+          <div class="character-asi-row">
+            <button type="button" class="btn ghost" id="cc-open-asi">Choose background ASIs</button>
+            <p class="hint" id="cc-asi-summary">No ASIs selected.</p>
+          </div>
+          <div class="character-total-row">
+            <label class="character-ngplus-check"><input type="checkbox" id="cc-ngplus" /> <span>NG+</span></label>
+            <p class="character-point-total">Point Buy Total: <strong id="cc-point-total">0</strong> / <span id="cc-point-limit">27</span></p>
+          </div>
+        </div>
+
+        <div class="card character-card">
+          <h3>Health Calculator</h3>
+          <p class="hint">First class is assumed to be your base class</p>
+          <div id="cc-classes"></div>
+          <div class="character-actions-row">
+            <button type="button" class="btn ghost" id="cc-add-class">Add class levels</button>
+          </div>
+          <label class="character-ngplus-check"><input type="checkbox" id="cc-tough" /> <span>Tough Feat</span></label>
+          <p class="character-point-total">Expected HP: <strong id="cc-hp-total">0</strong></p>
+        </div>
+
+        <div class="card character-card">
+          <h3>Checklist</h3>
+          <ul class="character-checklist">
+            <li><label><input type="checkbox" id="cc-check-class" /> My Class is in the list of approved classes (<a href="https://ravensmark.fandom.com/wiki/Approved_Classes/Subclasses" target="_blank" rel="noopener noreferrer">link</a>)</label></li>
+            <li><label><input type="checkbox" id="cc-check-species" /> My Species is in the list of approved species (<a href="https://ravensmark.fandom.com/wiki/Approved_Species" target="_blank" rel="noopener noreferrer">link</a>)</label></li>
+            <li><label><input type="checkbox" id="cc-check-language" /> My Languages are in the list of approved languages (<a href="https://ravensmark.fandom.com/wiki/Approved_Languages" target="_blank" rel="noopener noreferrer">link</a>)</label></li>
+            <li><label><input type="checkbox" id="cc-check-feat" /> I have chosen a free feat</label></li>
+            <li><label><input type="checkbox" id="cc-check-potion" /> I have taken my free potion</label></li>
+            <li>
+              <span>Starting Equipment Choice:</span>
+              <ul>
+                <li><label><input type="radio" name="cc-equipment-choice" id="cc-check-default-equipment" value="default" /> I have taken the default equipment for my class</label></li>
+                <li><label><input type="radio" name="cc-equipment-choice" id="cc-check-gold-instead" value="gold" /> I have taken gold instead of items</label></li>
+              </ul>
+            </li>
+            <li><label><input type="checkbox" id="cc-check-backstory" /> I have a rough backstory</label></li>
+            <li><label><input type="checkbox" id="cc-check-health-match" /> The health in my character sheet matches the calculated value above</label></li>
+          </ul>
+        </div>
+
+        <div class="card character-card">
+          <h3>Character Summary</h3>
+          <p class="hint">Copy this block for submission in your character creation ticket.</p>
+          <div class="copyable-output" data-copy-target="#cc-markdown-output">
+            <textarea id="cc-markdown-output" class="questinfo-md-output mono-output" readonly rows="9" spellcheck="false"></textarea>
+            <button type="button" class="btn ghost copyable-output-btn" aria-label="Copy character summary markdown">Copy</button>
+          </div>
+        </div>
+      </div>
+
+      <dialog id="cc-asi-dialog" class="character-dialog">
+        <form method="dialog" class="character-dialog-body">
+          <h3>Background ASIs</h3>
+          <p class="hint">Pick up to three total +1 boosts across stats.</p>
+          <div id="cc-asi-controls" class="character-asi-controls"></div>
+          <div class="character-actions-row">
+            <button type="button" class="btn ghost" id="cc-asi-reset">Reset</button>
+            <button type="submit" class="btn primary">Done</button>
+          </div>
+        </form>
+      </dialog>
+    </section>
+    
+    <section id="panel-encounter" class="panel" role="tabpanel" aria-labelledby="tab-encounter" hidden>
+      <div class="panel-inner">
+        <header class="panel-head">
+          <h2>Encounter Generator</h2>
+          <p class="lede" style="color: red;">This feature is Under Construction. It may not work as expected</p>
+          <p class="lede">Build combats using Open5e and CritterDB monsters.</p>
+        </header>
+        <div class="card">
+          <div class="actions">
+            <button type="button" class="btn primary" id="load-open5e">Load Open5e Data</button>
+            <p id="encounter-status" class="hint">Idle.</p>
+            <p id="encounter-last-synced" class="hint">Last synced: never</p>
+          </div>
+          <div class="encounter-import">
+            <input type="url" id="critterdb-url" placeholder="https://critterdb.com/#/bestiary/view/XXXX" />
+            <button type="button" class="btn ghost" id="import-critterdb">Import</button>
+          </div>
+          <p id="critterdb-message" class="alert" hidden></p>
+          <div class="encounter-filters">
+            <input type="search" id="filter-search" placeholder="Search by name" />
+            <input type="number" step="0.25" id="filter-cr-min" placeholder="CR min" />
+            <input type="number" step="0.25" id="filter-cr-max" placeholder="CR max" />
+            <select id="filter-type"><option value="">Any</option></select>
+            <input type="text" id="filter-alignment" placeholder="Alignment contains" />
+            <details class="source-dropdown"><summary id="filter-source-summary">All sources</summary><div id="filter-source" class="source-options"></div></details>
+          </div>
+          <div class="table-scroll">
+            <table class="encounter-table">
+              <thead><tr><th>Name</th><th>CR</th><th>Type</th><th>Alignment</th><th>Source</th></tr></thead>
+              <tbody id="encounter-monsters-body"></tbody>
+            </table>
+          </div>
+
+          <div class="card encounter-builder-card">
+            <h3>Encounter Builder</h3>
+            <div class="encounter-party-head">
+              <button type="button" class="btn ghost" id="encounter-add-character">Add Character</button>
+              <select id="encounter-difficulty">
+                <option value="low">Low</option>
+                <option value="moderate" selected>Moderate</option>
+                <option value="hard">Hard</option>
+              </select>
+            </div>
+            <div id="encounter-party-rows" class="encounter-party-rows"></div>
+            <div class="actions">
+              <p id="encounter-budget" class="hint">0 XP target</p>
+              <button type="button" class="btn primary" id="encounter-generate">Generate</button>
+            </div>
+            <p id="encounter-generated-total" class="hint">Generated 0 monsters • 0 / 0 XP</p>
+            <div class="table-scroll">
+              <table class="encounter-table">
+                <thead><tr><th>Name</th><th>CR</th><th>Type</th><th>Alignment</th><th>Source</th></tr></thead>
+                <tbody id="encounter-generated-body"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="panel-links" class="panel" role="tabpanel" aria-labelledby="tab-links" hidden>
+      <div class="panel-inner">
+        <header class="panel-head">
+          <h2>Useful Links</h2>
+          <p class="lede">Reach out to Boop if you have any additional suggestions to add here.</p>
+        </header>
+        <div class="card links-card">
+          <h4>General</h4>
+          <ul>
+            <li><a href="https://ravensmark.fandom.com/">RM Wiki</a></li>
+          </ul>
+          <h4>Scheduling</h4>
+          <ul>
+            <li><a href="https://starbestfit.com/" target="_blank" rel="noopener noreferrer">Star Best Fit</a></li>
+            <li><a href="https://www.when2meet.com/">When2Meet</a></li>
+            <li><a href="https://whenisgood.net/">WhenIsGood</a></li>
+            <li><a href="https://hammertime.cyou/en">Time to Discord Timestamp converter</a></li>
+          </ul>
+          <h4>Encounter Calculators & Generators</h4>
+          <ul>
+            <li><a href="https://koboldplus.club/">Kobold Fight Club - Encounter Generator / Calculator</a>
+            <li><a href="https://gabrielmartinmoran.github.io/DnD5eEncounterCalculator/?lang=EN" target="_blank" rel="noopener noreferrer">GMM's 2024 Encounter Calculator</a></li>
+            <li><a href="https://www.aidedd.org/dnd-encounter/index.php?l=1">aideDD Encounter Builder</a></li>
+            <li><a href="https://dmstinyhut.com/generate/encounter">DM's Tiny Hut - Encounter Generator</a></li>
+          </ul>
+          <h4>Battlemaps</h4>
+          <ul>
+            <li><a href="https://www.reddit.com/user/FlashbackJon/m/maps/">Multi-Reddit of various battlemap subreddits</a></li>
+            <li><a href="https://lostatlas.co">Lost Atlas</a></li>
+          </ul>
+          <h4>Monster Tokens</h4>
+          <ul>
+            <li><a href="https://toomanytokens.com/" target="_blank" rel="noopener noreferrer">Too Many Tokens (Pro: Entire Monster Manual, Con: AI)</a></li>
+            <li><a href="https://www.czepeku.com/fantasy/tokens">Czepeku</a></li>
+            <li><a href="https://tools.2minutetabletop.com/token-editor/index?search=noble">2 Minute Tabletop (Has customizer tool!)</a></li>
+            <li><a href="https://hammertime.cyou/en">Time to Discord Timestamp converter</a></li>
+            <li><a href="https://printableheroes.com/minis/">Printable Heroes</a></li>
+          </ul>
+          <h4>Props</h4>
+          <ul>
+            <li><a href="https://www.forgotten-adventures.net/live-gallery/">Forgotten Adventures</a></li>
+          </ul>
+          <h4>Homebrewing</h4>
+          <ul>
+            <li><a href="https://critterdb.com/">CritterDB</a></li>
+          </ul>
+          <h4 class="dm-only">DM Bookkeeping + RM Resources</h4>
+          <ul class="dm-only">
+            <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSepo4jpf1erZlceIbjkeeeKjU-Bma4J3hNcbe7dGfUEN0D4Vw/viewform?usp=header" target="_blank" rel="noopener noreferrer">Staff Point Request Form</a></li>
+            <li><a href="https://spark-lamprey-fd4.notion.site/Raven-s-Mark-Dungeon-Master-Guide-94108bc3eba24e5685c2e26a25bb0f36">RM DMG</a></li>
+          </ul>
+          <h4>Background Audio</h4>
+          <ul>
+            <li><a href="https://tabletopaudio.com/">Tabletop Audio</a></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>
+      Raven's Mark Tools ·
+      <a href="https://github.com/RavensMark/tool-website" target="_blank" rel="noopener noreferrer">GitHub Repository</a> .
+      <a href="https://github.com/RavensMark/tool-website/issues">File a Bug/Feature Request</a>
+    </p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/emoji-blast/dist/global.js"></script>
+  <script src="assets/js/tabs.js"></script>
+  <script src="assets/js/emoji-blast-trigger.js"></script>
+  <script src="assets/js/boopsum.js"></script>
+  <script src="assets/js/questinfo.js"></script>
+  <script src="assets/js/questnotes.js"></script>
+  <script src="assets/js/staff.js"></script>
+  <script src="assets/js/loot.js"></script>
+  <script src="assets/js/character.js"></script>
+  <script src="assets/js/avrae.js"></script>
+  <script src="assets/js/avrae-use-builder.js"></script>
+  <script src="assets/js/avrae-equip-builder.js"></script>
+  <script src="assets/js/copyable.js"></script>
+  <script type="module" src="src/main.js"></script>
+</body>
+</html>
