@@ -29,7 +29,7 @@ const XP_BUDGETS_BY_LEVEL = {
   19: { low: 5500, moderate: 10700, hard: 17200 }, 20: { low: 6400, moderate: 13200, hard: 22000 },
 };
 
-const state = { monsters: [], filters: { search: '', crMin: '', crMax: '', type: '', alignment: '', source: '' } };
+const state = { monsters: [], filters: { search: '', crMin: '', crMax: '', type: '', alignment: '', sources: [] } };
 
 const els = {
   tbody: document.getElementById('encounter-monsters-body'),
@@ -45,6 +45,7 @@ const els = {
   type: document.getElementById('filter-type'),
   alignment: document.getElementById('filter-alignment'),
   source: document.getElementById('filter-source'),
+  sourceSummary: document.getElementById('filter-source-summary'),
   partyRows: document.getElementById('encounter-party-rows'),
   quickAdd: document.getElementById('encounter-level-quickadd'),
   difficulty: document.getElementById('encounter-difficulty'),
@@ -167,16 +168,25 @@ function generateEncounter() {
   if (els.generatedTotal) els.generatedTotal.textContent = `Generated ${chosen.length} monsters • ${used.toLocaleString()} / ${budget.toLocaleString()} XP`;
 }
 
-function updateFilters() { /* unchanged */
+function getSelectedSources() {
+  return [...(els.source?.querySelectorAll('input[type=checkbox]:checked') || [])].map((el) => el.value);
+}
+function updateSourceSummary() {
+  const selected = getSelectedSources();
+  if (!els.sourceSummary) return;
+  els.sourceSummary.textContent = !selected.length ? 'All sources' : `${selected.length} source${selected.length === 1 ? '' : 's'} selected`;
+}
+function updateFilters() {
   state.filters = {
     search: els.search.value, crMin: els.crMin.value, crMax: els.crMax.value,
-    type: els.type.value, alignment: els.alignment.value, source: els.source.value,
+    type: els.type.value, alignment: els.alignment.value, sources: getSelectedSources(),
   };
+  updateSourceSummary();
   repaintTableOnly();
 }
 function repaint() {
   const { types, sources } = buildFilters(state.monsters);
-  syncOptions(els.type, types); syncOptions(els.source, sources); repaintTableOnly(); updateBudgetOnly();
+  syncOptions(els.type, types); syncSourceOptions(sources); repaintTableOnly(); updateBudgetOnly();
 }
 function repaintTableOnly() {
   const filtered = applyFilters(state.monsters, state.filters);
@@ -187,6 +197,24 @@ function syncOptions(select, values) {
   if (!select) return; const current = select.value; select.innerHTML = '<option value="">Any</option>';
   for (const value of values) { const option = document.createElement('option'); option.value = value; option.textContent = value; select.appendChild(option); }
   select.value = current;
+}
+function syncSourceOptions(values) {
+  if (!els.source) return;
+  const selected = new Set(getSelectedSources());
+  els.source.innerHTML = '';
+
+  for (const value of values) {
+    const label = document.createElement('label');
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.value = value;
+    checkbox.checked = selected.has(value);
+    checkbox.addEventListener('change', updateFilters);
+    label.append(checkbox, ` ${value}`);
+    els.source.appendChild(label);
+  }
+
+  updateSourceSummary();
 }
 function shouldAutoSyncOpen5e() {
   const metaRaw = localStorage.getItem(CACHE_META_KEY); if (!metaRaw) return true;
