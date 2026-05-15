@@ -40,6 +40,12 @@ function parseBestiaryId(url) {
   return match ? match[1] : null;
 }
 
+function parseMonsterPayload(payload) {
+  if (Array.isArray(payload) && payload.length) return payload;
+  if (Array.isArray(payload?.creatures) && payload.creatures.length) return payload.creatures;
+  return [];
+}
+
 async function fetchCritterDbApiMonsters(url) {
   const bestiaryId = parseBestiaryId(url);
   if (!bestiaryId) return [];
@@ -47,15 +53,25 @@ async function fetchCritterDbApiMonsters(url) {
     `https://critterdb.com/api/publishedbestiaries/${bestiaryId}/creatures`,
     `https://critterdb.com/api/bestiaries/${bestiaryId}/creatures`,
   ];
+
   for (const endpoint of endpoints) {
     try {
       const response = await fetch(endpoint);
-      if (!response.ok) continue;
-      const payload = await response.json();
-      if (Array.isArray(payload) && payload.length) return payload;
-      if (Array.isArray(payload?.creatures) && payload.creatures.length) return payload.creatures;
+      if (response.ok) {
+        const parsed = parseMonsterPayload(await response.json());
+        if (parsed.length) return parsed;
+      }
+    } catch {}
+
+    try {
+      const mirror = await fetch(toReadableMirror(endpoint));
+      if (!mirror.ok) continue;
+      const text = await mirror.text();
+      const parsed = parseMonsterPayload(JSON.parse(text));
+      if (parsed.length) return parsed;
     } catch {}
   }
+
   return [];
 }
 
