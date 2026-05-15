@@ -1,0 +1,257 @@
+category,label
+Animals & Nature,Animal attack
+Animals & Nature,Animal death
+Animals & Nature,Animal testing & experimentation
+Animals & Nature,Hunting
+Animals & Nature,Parasites / infestation
+Animals & Nature,Shark attacks
+Animals & Nature,Snakes / Spiders / Insects
+"Crime, Captivity & Institutional Harm",Concentration camp
+"Crime, Captivity & Institutional Harm",Conscription
+"Crime, Captivity & Institutional Harm",Cults
+"Crime, Captivity & Institutional Harm",Human experimentation
+"Crime, Captivity & Institutional Harm",Imprisonment & Incarceration
+"Crime, Captivity & Institutional Harm",Military service & deployment
+"Crime, Captivity & Institutional Harm",Moral panic
+"Crime, Captivity & Institutional Harm",Organised crime
+"Crime, Captivity & Institutional Harm",Police corruption
+"Crime, Captivity & Institutional Harm",Possession
+"Crime, Captivity & Institutional Harm",Radicalisation
+"Crime, Captivity & Institutional Harm",Slavery & indentured servitude
+"Crime, Captivity & Institutional Harm",Unethical science
+"Disasters, Accidents & Environmental Dangers",Avalanche
+"Disasters, Accidents & Environmental Dangers",Blizzard
+"Disasters, Accidents & Environmental Dangers",Boating accidents
+"Disasters, Accidents & Environmental Dangers",Building collapse
+"Disasters, Accidents & Environmental Dangers",Bushfire
+"Disasters, Accidents & Environmental Dangers",Car accident
+"Disasters, Accidents & Environmental Dangers",Drought
+"Disasters, Accidents & Environmental Dangers",Earthquakes
+"Disasters, Accidents & Environmental Dangers",Explosions
+"Disasters, Accidents & Environmental Dangers",Fire & arson
+"Disasters, Accidents & Environmental Dangers",Floods
+"Disasters, Accidents & Environmental Dangers",Landslide
+"Disasters, Accidents & Environmental Dangers",Maritime disasters
+"Disasters, Accidents & Environmental Dangers",Nuclear disaster
+"Disasters, Accidents & Environmental Dangers",Plane crash
+"Disasters, Accidents & Environmental Dangers",Sinkhole
+"Disasters, Accidents & Environmental Dangers","Tornadoes, hurricanes & cyclones"
+"Disasters, Accidents & Environmental Dangers",Train accidents
+Discrimination & Oppression,Ableism
+Discrimination & Oppression,Antisemitism
+Discrimination & Oppression,Antiziganism (anti-Romani discrimination)
+Discrimination & Oppression,Classism
+Discrimination & Oppression,Colonialism
+Discrimination & Oppression,Colourism (discrimination based on skin tone)
+Discrimination & Oppression,Deadnaming
+Discrimination & Oppression,Eugenics
+Discrimination & Oppression,Genocide
+Discrimination & Oppression,Hate crimes
+Discrimination & Oppression,Ku Klux Klan
+Discrimination & Oppression,Misgendering
+Discrimination & Oppression,Outing
+Discrimination & Oppression,Racism
+Discrimination & Oppression,Religious persecution
+Discrimination & Oppression,Sexism & misogyny
+Discrimination & Oppression,Slurs
+Discrimination & Oppression,White supremacy
+"Family, Relationships & Reproductive Themes",Abortion
+"Family, Relationships & Reproductive Themes",Adoption
+"Family, Relationships & Reproductive Themes","Arranged, forced & coerced marriage"
+"Family, Relationships & Reproductive Themes",Child Death
+"Family, Relationships & Reproductive Themes",Childbirth
+"Family, Relationships & Reproductive Themes",Death of a loved one
+"Family, Relationships & Reproductive Themes",Disappearance of a loved one
+"Family, Relationships & Reproductive Themes",Disownment
+"Family, Relationships & Reproductive Themes",Divorce
+"Family, Relationships & Reproductive Themes",Familial Death
+"Family, Relationships & Reproductive Themes",Foster care
+"Family, Relationships & Reproductive Themes",Infertility
+"Family, Relationships & Reproductive Themes",Involuntary adoption
+"Family, Relationships & Reproductive Themes",Involuntary pregnancy
+"Family, Relationships & Reproductive Themes",Miscarriage
+"Family, Relationships & Reproductive Themes",Parental Death
+"Family, Relationships & Reproductive Themes",Pregnancy
+"Family, Relationships & Reproductive Themes",Pregnancy loss
+"Family, Relationships & Reproductive Themes",Stillbirth
+General Distress & Other,Abandonment
+General Distress & Other,Academic Pressure
+General Distress & Other,Alienation / Social Isolation
+General Distress & Other,Amnesia & memory disorders
+General Distress & Other,"Asphyxia, strangulation & suffocation"
+General Distress & Other,Betrayal
+General Distress & Other,Body horror
+General Distress & Other,Body modifications
+General Distress & Other,Bullying
+General Distress & Other,Cannibalism
+General Distress & Other,Captivity & confinement
+General Distress & Other,Cheating
+General Distress & Other,Conversion therapy
+General Distress & Other,Cyberbullying
+General Distress & Other,Dead bodies & body parts
+General Distress & Other,Death from exposure
+General Distress & Other,Death from falling
+General Distress & Other,Dehumanisation
+General Distress & Other,Disfigurmisia (Predjudice for Disfigurment)
+General Distress & Other,Disordered Eating & Compulsive Exercise
+General Distress & Other,Eyeball trauma
+General Distress & Other,Garrotting (strangulation with a wire/cord)
+General Distress & Other,Gentrification
+General Distress & Other,Grief & loss depiction
+General Distress & Other,Hoarding
+General Distress & Other,Homelessness
+General Distress & Other,Identity theft / Impersonation
+General Distress & Other,Infidelity
+General Distress & Other,Loss of autonomy / agency
+General Distress & Other,Loss of limb
+General Distress & Other,Loss of vision
+General Distress & Other,Physical injuries
+General Distress & Other,Poisoning
+General Distress & Other,Post Traumatic Stress Disorder
+General Distress & Other,Poverty
+General Distress & Other,Predatory behaviour
+General Distress & Other,Public humiliation
+General Distress & Other,Refugee experiences
+General Distress & Other,Religious trauma
+General Distress & Other,Riots
+General Distress & Other,Scalping
+General Distress & Other,Scars
+General Distress & Other,Sex-worker shaming
+General Distress & Other,Sleep disorders
+General Distress & Other,Starvation & dehydration
+General Distress & Other,Sterilization
+General Distress & Other,Vitriolage (Acid attacks)
+General Distress & Other,Vivisepulture (Burial Alive)
+General Distress & Other,Workplace harassment
+Medical & Health Conditions,Alzheimer’s Disease
+Medical & Health Conditions,Amputation
+Medical & Health Conditions,Anaphylaxis
+Medical & Health Conditions,Animal illness & injury
+Medical & Health Conditions,Asthma
+Medical & Health Conditions,Cancer
+Medical & Health Conditions,Chronic illness & chronic pain
+Medical & Health Conditions,Coma
+Medical & Health Conditions,COVID-19
+Medical & Health Conditions,Dementia
+Medical & Health Conditions,Eating disorders
+Medical & Health Conditions,Emesis (Vomiting)
+Medical & Health Conditions,Epilepsy
+Medical & Health Conditions,Factitious Disorder (fabricated illness disorder)
+Medical & Health Conditions,Forced eating
+Medical & Health Conditions,Forced medical treatment
+Medical & Health Conditions,Heart attack
+Medical & Health Conditions,Hospitalisation
+Medical & Health Conditions,Medical experimentation
+Medical & Health Conditions,Medical treatment & procedures
+Medical & Health Conditions,Munchausen Syndrome
+Medical & Health Conditions,Needles
+Medical & Health Conditions,Pandemics
+Medical & Health Conditions,Paralysis
+Medical & Health Conditions,Physical illness
+Medical & Health Conditions,Plagues and contagions
+Medical & Health Conditions,Psychiatric hospitalisation
+Medical & Health Conditions,Purging
+Medical & Health Conditions,Seizures
+Medical & Health Conditions,Stroke
+Medical & Health Conditions,Surgery
+Medical & Health Conditions,Terminal illness
+Medical & Health Conditions,Weight loss & gain
+Mental & Emotional Health,Age regression
+Mental & Emotional Health,Agoraphobia
+Mental & Emotional Health,Anxiety & anxiety attacks
+Mental & Emotional Health,Arophobia (prejudice against aromantic people)
+Mental & Emotional Health,Biphobia
+Mental & Emotional Health,Bipolar Disorder
+Mental & Emotional Health,Brainwashing / Mind Control
+Mental & Emotional Health,Claustrophobia
+Mental & Emotional Health,Delusions
+Mental & Emotional Health,Depression
+Mental & Emotional Health,Dissociation & dissociative episodes
+Mental & Emotional Health,Dysphoria
+Mental & Emotional Health,Fatphobia & body-shaming
+Mental & Emotional Health,Gaslighting
+Mental & Emotional Health,Hallucinations
+Mental & Emotional Health,Homophobia
+Mental & Emotional Health,Intrusive thoughts
+Mental & Emotional Health,Islamophobia
+Mental & Emotional Health,Lesbophobia
+Mental & Emotional Health,Manipulation
+Mental & Emotional Health,Mind control
+Mental & Emotional Health,Obsessive-Compulsive Disorder
+Mental & Emotional Health,Phobias
+Mental & Emotional Health,Queerphobia
+Mental & Emotional Health,Schizophrenia
+Mental & Emotional Health,Self-harm
+Mental & Emotional Health,Sensory overload
+Mental & Emotional Health,Suicidal ideation
+Mental & Emotional Health,Suicide & attempted suicide
+Mental & Emotional Health,Survivor guilt
+Mental & Emotional Health,Toxic relationships
+Mental & Emotional Health,Transphobia
+Mental & Emotional Health,Trauma bonding
+Sexual Content,Adult-minor relationships
+Sexual Content,Aphobia (prejudice against asexual people)
+Sexual Content,Bestiality
+Sexual Content,Dubious consent scenarios
+Sexual Content,Gang rape
+Sexual Content,Grooming
+Sexual Content,Incest
+Sexual Content,Necrophilia
+Sexual Content,Paedophilia
+Sexual Content,Rape
+Sexual Content,Revenge pornography
+Sexual Content,Sex trafficking
+Sexual Content,Sex work
+Sexual Content,Sexual assault
+Sexual Content,Sexual harassment
+Sexual Content,Sexual slavery
+Sexual Content,Slut-shaming
+Sexual Content,Statutory rape
+Sexual Content,Underage pregnancy
+Sexual Content,Voyeurism
+Substance Use & Addiction,Addiction
+Substance Use & Addiction,Alcoholism
+Substance Use & Addiction,Drugging
+Substance Use & Addiction,Gambling addiction
+Substance Use & Addiction,Overdose
+Substance Use & Addiction,Sex addiction
+Substance Use & Addiction,Substance addiction
+Violence & Physical Harm,Abuse of Power
+Violence & Physical Harm,Alcohol consumption & abuse
+Violence & Physical Harm,Animal cruelty & abuse
+Violence & Physical Harm,Blackmail
+Violence & Physical Harm,Blood & gore depiction
+Violence & Physical Harm,Chemical gassing & warfare
+Violence & Physical Harm,Child abuse / neglect
+Violence & Physical Harm,Decapitation
+Violence & Physical Harm,Dismemberment
+Violence & Physical Harm,Domestic abuse & violence
+Violence & Physical Harm,Drug abuse
+Violence & Physical Harm,Electrocution
+Violence & Physical Harm,Emotional abuse
+Violence & Physical Harm,Execution
+Violence & Physical Harm,Gang violence
+Violence & Physical Harm,Genital mutilation
+Violence & Physical Harm,Gun violence
+Violence & Physical Harm,Hanging & lynching
+Violence & Physical Harm,Home invasion
+Violence & Physical Harm,Hostage situation
+Violence & Physical Harm,Intimate partner abuse & violence
+Violence & Physical Harm,Kidnapping
+Violence & Physical Harm,"Knife, sword & axe violence"
+Violence & Physical Harm,Massacres & mass murder
+Violence & Physical Harm,Mercy killing / euthanasia
+Violence & Physical Harm,Murder & attempted murder
+Violence & Physical Harm,Mutilation
+Violence & Physical Harm,Physical assault
+Violence & Physical Harm,Police brutality & violence
+Violence & Physical Harm,Ritual abuse
+Violence & Physical Harm,School/workplace shooting
+Violence & Physical Harm,Skinning / flaying
+Violence & Physical Harm,Stalking
+Violence & Physical Harm,Terrorism
+Violence & Physical Harm,Torture
+Violence & Physical Harm,War themes & military violence
+Violence & Physical Harm,Warcrimes
+Violence & Physical Harm,Wartime atrocities
+Violence & Physical Harm,Whipping
