@@ -26,6 +26,6 @@ jobs:
             - name: Deploy preview
               uses: rossjrw/pr-preview-action@v1
               with:
-                  source-dir: ./
+                  source-dir: .
                   preview-branch: main
                   qr-code: true
