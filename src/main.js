@@ -142,17 +142,22 @@ function monsterXp(monster) {
 }
 function generateEncounter() {
   const budget = computeBudget();
+  const locked = state.generated
+    .filter((monster) => monster.locked)
+    .map((monster) => ({ ...monster, xp: monster.xp || monsterXp(monster), locked: true }));
+
+  const lockedXp = locked.reduce((sum, monster) => sum + monster.xp, 0);
+  let remaining = Math.max(0, budget - lockedXp);
   const pool = state.monsters
     .map((m) => ({ ...m, xp: monsterXp(m) }))
     .filter((m) => m.xp > 0 && m.xp <= budget);
-  let remaining = budget;
-  const chosen = [];
+  const chosen = [...locked];
 
   for (let attempts = 0; attempts < 200 && chosen.length < 20; attempts += 1) {
     const candidates = pool.filter((monster) => monster.xp <= remaining);
     if (!candidates.length) break;
     const picked = candidates[Math.floor(Math.random() * candidates.length)];
-    chosen.push(picked);
+    chosen.push({ ...picked, locked: false });
     remaining -= picked.xp;
     if (remaining <= budget * 0.05) break;
   }
@@ -163,7 +168,7 @@ function generateEncounter() {
     const bestXp = Math.max(...candidates.map((monster) => monster.xp));
     const nearBest = candidates.filter((monster) => monster.xp >= bestXp * 0.7);
     const picked = nearBest[Math.floor(Math.random() * nearBest.length)];
-    chosen.push(picked);
+    chosen.push({ ...picked, locked: false });
     remaining -= picked.xp;
   }
 
@@ -172,7 +177,7 @@ function generateEncounter() {
 }
 
 function addGeneratedMonster(monster) {
-  state.generated.push({ ...monster, xp: monsterXp(monster) });
+  state.generated.push({ ...monster, xp: monsterXp(monster), locked: false });
   repaintGeneratedTable();
 }
 
@@ -181,20 +186,43 @@ function removeGeneratedMonster(index) {
   repaintGeneratedTable();
 }
 
+function toggleGeneratedMonsterLock(index) {
+  const monster = state.generated[index];
+  if (!monster) return;
+  monster.locked = !monster.locked;
+  repaintGeneratedTable();
+}
+
 function repaintGeneratedTable() {
   const budget = computeBudget();
-  const displayRows = state.generated.map((m, index) => ({
-    ...m,
-    _index: index,
-    source: `${m.source || m.origin} • ${(m.xp || monsterXp(m)).toLocaleString()} XP`,
-  }));
+  const fragment = document.createDocumentFragment();
 
-  renderMonsterTable(els.generatedBody, displayRows, {
-    actionLabel: 'Delete',
-    onAction: (m) => removeGeneratedMonster(m._index),
+  state.generated.forEach((monster, index) => {
+    const xp = monster.xp || monsterXp(monster);
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${monster.name}</td><td>${monster.cr ?? ''}</td><td>${monster.type ?? ''}</td><td>${monster.alignment ?? ''}</td><td>${monster.source || monster.origin} • ${xp.toLocaleString()} XP${monster.locked ? ' • Locked' : ''}</td>`;
+
+    const actionTd = document.createElement('td');
+    const lockBtn = document.createElement('button');
+    lockBtn.type = 'button';
+    lockBtn.className = 'btn ghost';
+    lockBtn.textContent = monster.locked ? 'Unlock' : 'Lock';
+    lockBtn.addEventListener('click', () => toggleGeneratedMonsterLock(index));
+
+    const deleteBtn = document.createElement('button');
+    deleteBtn.type = 'button';
+    deleteBtn.className = 'btn ghost';
+    deleteBtn.textContent = 'Delete';
+    deleteBtn.addEventListener('click', () => removeGeneratedMonster(index));
+
+    actionTd.append(lockBtn, document.createTextNode(' '), deleteBtn);
+    tr.appendChild(actionTd);
+    fragment.appendChild(tr);
   });
 
-  const used = state.generated.reduce((sum, m) => sum + (m.xp || monsterXp(m)), 0);
+  els.generatedBody.replaceChildren(fragment);
+
+  const used = state.generated.reduce((sum, monster) => sum + (monster.xp || monsterXp(monster)), 0);
   if (els.generatedTotal) {
     els.generatedTotal.textContent = `Generated ${state.generated.length} monsters • ${used.toLocaleString()} / ${budget.toLocaleString()} XP`;
   }
